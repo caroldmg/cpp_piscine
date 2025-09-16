@@ -8,27 +8,20 @@ Fixed::Fixed()
 	std::cout << "Default constructor called" << std::endl;
 }
 
-// darle el valor al nuevo elemento de esta manera me permite inicializar el atributo con ese valor en vez de inicialiar y reasignar;
 Fixed::Fixed(const Fixed &original) : value(original.value)
 {
 	// this->value = original.getRawBits();
 	std::cout << "Fixed copy constructor called" << std::endl;
 }
 
-
-/**
- * The '<<' operator shifts to the left (this equals to multiplying for 2^fractionalBits)
- */
 Fixed::Fixed(const int intNum)
 {
-// convert to the corresponding fixed point value
 	value = intNum << this->fractionalBits;
 	std::cout << "Int constructor called" << std::endl;
 }
 
 Fixed::Fixed(const float floatNum)
-{
-	// convert to the corresponding fixed point value 
+{ 
 	std::cout << "Float constructor called" << std::endl;
 	this->value = (int)roundf(floatNum * (1 << Fixed::fractionalBits));
 }
@@ -55,10 +48,6 @@ void Fixed::setRawBits(int const raw)
 	this->value = raw;
 }
 
-// converts the fixed-point valu to a floating-point value
-/**
- * we cast to float before the division to make sure the operation is done in floating, so it preserves the decimal part
- */
 float	Fixed::toFloat() const
 {
 	float newValue;
@@ -67,8 +56,6 @@ float	Fixed::toFloat() const
 	return (newValue);
 }
 
-// Converts the fixed-point value to an integer value
-// The '>>' operator shifts to the right (this equals to divide for 2^fractionalBits)
 int		Fixed::toInt(void) const
 {
 	int newValue;

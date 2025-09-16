@@ -1,6 +1,21 @@
 #pragma once
 #include <iostream>
+#include <cmath>
 
+
+/* 
+	Cómo se guarda el número
+
+Usando 8 bits fraccionales (fractionalBits = 8).
+
+Eso significa que 1 unidad real equivale a 2^8 = 256 en la representación interna.
+
+Ejemplo:
+
+El número 5 se guarda como 5 << 8 = 1280.
+
+El número 3.5 se guarda como 3.5 * 256 = 896 (aproximando si hago constructor desde float).
+*/
 class Fixed
 {
 	private:
@@ -18,7 +33,7 @@ class Fixed
 		int		getRawBits() const;
 		void	setRawBits(int const raw);
 		float	toFloat() const;
-		int		toInt(void) const;
+		int		toInt() const;
 };
 
 std::ostream& operator<<(std::ostream &os, const Fixed &toPrint);
