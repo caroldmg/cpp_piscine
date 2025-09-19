@@ -33,7 +33,6 @@ Fixed::~Fixed()
 	std::cout << "destroyer" << std::endl;
 }
 
-
 // MÉTODOS DE CLASE
 
 int	Fixed::getRawBits(void) const
@@ -52,7 +51,7 @@ float	Fixed::toFloat() const
 {
 	float newValue;
 
-	newValue = ((float)this->value / ( 1 << Fixed::fractionalBits));
+	newValue = ((float)this->value / (1 << Fixed::fractionalBits));
 	return (newValue);
 }
 
@@ -64,18 +63,30 @@ int		Fixed::toInt(void) const
 	return (newValue);
 }
 
-// OPERATORS
-
-Fixed &Fixed::operator=(const Fixed &original)
+Fixed& Fixed::min(Fixed& num1, Fixed& num2)
 {
-	std::cout << "Copy assignment operator called " << std::endl;
-	if (this != &original)
-		value = original.getRawBits();
-	return (*this);
+	if (num1 < num2)
+		return (num1);
+	return (num2);
 }
 
-std::ostream& operator<<(std::ostream &os, const Fixed &toPrint)
+const Fixed& Fixed::min(const Fixed& num1, const Fixed& num2)
 {
-	os << toPrint.toFloat();
-	return (os);
+	if (num1 < num2)
+		return (num1);
+	return (num2);
+}
+
+Fixed& Fixed::max(Fixed& num1, Fixed& num2)
+{
+	if (num1 > num2)
+		return (num1);
+	return (num2);
+}
+
+const Fixed& Fixed::max(const Fixed& num1, const Fixed& num2)
+{
+	if (num1 > num2)
+		return (num1);
+	return (num2);
 }

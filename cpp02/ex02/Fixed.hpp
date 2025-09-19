@@ -19,22 +19,22 @@ class Fixed
 		Fixed&	operator--(void); /* preDecrement */
 		Fixed	operator--(int);
 
-		Fixed	operator+(const Fixed& toOperate);
-		Fixed	operator-(const Fixed& toOperate);
-		Fixed	operator*(const Fixed& toOperate);
-		Fixed	operator/(const Fixed& toOperate);
+		Fixed	operator+(const Fixed& toOperate) const;
+		Fixed	operator-(const Fixed& toOperate) const;
+		Fixed	operator*(const Fixed& toOperate) const;
+		Fixed	operator/(const Fixed& toOperate) const;
 
-		bool	operator>(const Fixed& toCompare);
-		bool	operator<(const Fixed& toCompare);
-		bool	operator>=(const Fixed& toCompare);
-		bool	operator<=(const Fixed& toCompare);
-		bool	operator==(const Fixed& toCompare);
-		bool	operator!=(const Fixed& toCompare);
+		bool	operator>(const Fixed& toCompare) const;
+		bool	operator<(const Fixed& toCompare) const;
+		bool	operator>=(const Fixed& toCompare) const;
+		bool	operator<=(const Fixed& toCompare) const;
+		bool	operator==(const Fixed& toCompare) const;
+		bool	operator!=(const Fixed& toCompare) const;
 
 		static Fixed&	min(Fixed& num1, Fixed& num2);
-		static Fixed&	min(const Fixed& num1, const Fixed& num2);
+		static const Fixed&	min(const Fixed& num1, const Fixed& num2);
 		static Fixed&	max(Fixed& num1, Fixed& num2);
-		static Fixed&	max(const Fixed& num1, const Fixed& num2);
+		static const Fixed&	max(const Fixed& num1, const Fixed& num2);
 
 		Fixed& operator=(const Fixed &original);
 		int		getRawBits() const;
