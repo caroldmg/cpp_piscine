@@ -1,5 +1,5 @@
 NAME = Fixed
-SRC = main.cpp Fixed.cpp Fixed_operators.cpp
+SRC = main.cpp Fixed.cpp Fixed_operators.cpp Point.cpp bsp.cpp
 OBJ = $(SRC:.cpp=.o)
 HEADERS =
 CC = c++
