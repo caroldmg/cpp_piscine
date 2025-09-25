@@ -16,3 +16,4 @@ class ScavTrap : public ClapTrap
 		void	attack(const std::string& target) override;
 		void	guardGate();
 };
+
