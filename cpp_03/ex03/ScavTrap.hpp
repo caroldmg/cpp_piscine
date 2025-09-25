@@ -1,7 +1,7 @@
 #include "ClapTrap.hpp"
 #pragma once
 
-class ScavTrap : public ClapTrap
+class ScavTrap : virtual public ClapTrap
 {
 	private:
 		// no a la privatización de atributos I guess??
