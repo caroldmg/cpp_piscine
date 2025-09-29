@@ -2,19 +2,15 @@
 
 // CONSTRUCTORES
 
-ScavTrap::ScavTrap() : ClapTrap()
+ScavTrap::ScavTrap() : ClapTrap("standard scavtrap idk", 100, 50, 20)
 {
-	this->hp = 100;
-	this->energy = 50;
-	this->damage = 20;
-	this->name = "standard scavtrap idk";
+	std::cout << " ScavTrap Constructor called!" << std::endl;
+	
 }
 
-ScavTrap::ScavTrap(std::string name)
+ScavTrap::ScavTrap(std::string name) : ClapTrap(name, 100, 50, 20)
 {
-	this->name = name;
 	std::cout << " ScavTrap Constructor with name " << name << " called!" << std::endl;
-
 }
 
 ScavTrap::ScavTrap(const ScavTrap& org)
@@ -57,5 +53,8 @@ void ScavTrap::attack(const std::string &target)
 
 void	ScavTrap::guardGate()
 {
-	std::cout << "ScavTrap " << this->getName() << " is now in Gate Keeper mode ⚔️ " << std::endl;
+	if (this->getHp() <= 0)
+		std::cout << "ScavTrap " << this->getName() << " is dead and cannot guard the gate ☠️ " << std::endl;
+	else
+		std::cout << "ScavTrap " << this->getName() << " is now in Gate Keeper mode ⚔️ " << std::endl;
 }

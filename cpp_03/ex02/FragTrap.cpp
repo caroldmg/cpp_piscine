@@ -1,16 +1,12 @@
 #include "FragTrap.hpp"
 
-FragTrap::FragTrap() : ClapTrap()
+FragTrap::FragTrap() : ClapTrap("something cool", 100, 100, 30)
 {
-	this->hp = 100;
-	this->energy = 100;
-	this->damage = 30;
-	this->name = "something cool";
+	std::cout << "FragTrap Default Constructor called!" << std::endl;
 }
 
-FragTrap::FragTrap(std::string name)
+FragTrap::FragTrap(std::string name) : ClapTrap(name, 100, 100, 30)
 {
-	this->name = name;
 	std::cout << "FragTrap Constructor with name " << name << " called!" << std::endl;
 }
 
@@ -41,5 +37,8 @@ FragTrap& FragTrap::operator=(const FragTrap& org)
 
 void	FragTrap::highFivesGuys()
 {
-	std::cout << "FragTrap " << this->name <<  "raises their hand at you asking for you to clap it ✋" << std::endl;
+	if (this->getHp() <= 0)
+		std::cout << "FragTrap " << this->name << " would really love to hgh five you, but it's already dead and you cannot high five the dead ones (it would be really weird) 🧟⊹˚." << std::endl;
+	else
+		std::cout << "FragTrap " << this->name <<  " raises their hand at you asking for you to clap it ✋" << std::endl;
 }

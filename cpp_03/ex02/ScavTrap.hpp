@@ -13,7 +13,7 @@ class ScavTrap : public ClapTrap
 
 		ScavTrap& operator=(const ScavTrap& org);
 
-		void	attack(const std::string& target) override;
+		void	attack(const std::string& target);
 		void	guardGate();
 };
 

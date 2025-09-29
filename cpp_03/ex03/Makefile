@@ -1,5 +1,5 @@
-NAME = ClapTrap
-SRC = main.cpp ClapTrap.cpp
+NAME = DiamondTrap
+SRC = main.cpp ClapTrap.cpp FragTrap.cpp ScavTrap.cpp DiamondTrap.cpp
 OBJ = $(SRC:.cpp=.o)
 HEADERS =
 CC = c++

@@ -1,30 +1,52 @@
-#include "ScavTrap.hpp"
+#include "FragTrap.hpp"
 
-void	announce(ClapTrap c)
+void seeStats(ClapTrap &c, std::string color)
 {
-	std::cout << "Hello! I am a ClapTrap and my name is " << c.getName() << std::endl;
+	std::cout << color << std::endl;
+	std::cout << "------- " << c.getName() << " -------" << std::endl;
+	std::cout << "Hit Points:  " << c.getHp() << std::endl;
+	std::cout << "Energy Points:  " << c.getEnergy() << std::endl;
+	std::cout << "Attack Damage:  " << c.getDamage() << std::endl;
+	std::cout << "Ready to attack!" << std::endl;
+	std::cout << "____________________" << std::endl;
+	std::cout << RESET << std::endl;
 }
 
 int main()
 {
-	ScavTrap scav1;
-	ScavTrap scav2("Supercolegui");
-	ScavTrap scav3("Antonio");
-	ScavTrap scav4(scav1);
+	FragTrap frag1;
+	FragTrap frag2("Supercolegui");
+	FragTrap frag3("Antonio");
+	FragTrap frag4(frag1);
 
-	announce(scav1);
-	announce(scav2);
-	announce(scav3);
-	announce(scav4);
+	seeStats(frag1, GREEN);
+	seeStats(frag2, RED);
+	seeStats(frag3, YELLOW);
+	seeStats(frag4, MAGENTA);
 
-	scav2.attack("someone");
-	scav2.takeDamage(7);
-	scav2.beRepaired(3);
-	scav2.takeDamage(2);
-	while (scav2.getEnergy() > 0)
-		scav2.attack("everybody");
-	scav2.beRepaired(3);
-	while(scav2.getHp() > 0)
-		scav2.takeDamage(1);
-	scav3.guardGate();
+	std::cout << " \n \n START SIMULATION \n \t--------" << std::endl;
+	frag2.attack("someone");
+	frag2.takeDamage(7);
+	frag2.beRepaired(3);
+	frag2.takeDamage(2);
+	frag2.attack("everybody");
+	frag2.setEnergy(0);
+	frag2.attack("someone");
+	frag2.beRepaired(3);
+	std::cout << "ahora a este le cambiamos los HP a 1 y le hacemos recibir daño ----"  << std::endl;
+	frag3.setHp(1);
+	frag3.takeDamage(1);
+	frag3.takeDamage(1);
+
+	seeStats(frag1, GREEN);
+	seeStats(frag2, RED);
+	seeStats(frag3, YELLOW);
+	seeStats(frag4, MAGENTA);
+	
+	std::cout << "--- high five!!! \n " << std::endl;
+	frag3.highFivesGuys();
+	frag2.highFivesGuys();
+	
+	std::cout << "\n ---- LET'S DESTROY EVERYTHING ---- \n" << std::endl;
+
 }

@@ -3,24 +3,32 @@
 ClapTrap::ClapTrap(): hp(10), energy(10), damage(0)
 {
 	this->name = "non";
-	std::cout << "Empty constructor called!" << std::endl;
+	std::cout << "ClapTrap Empty constructor called!" << std::endl;
 }
 
 ClapTrap::ClapTrap(std::string name) : hp(10), energy(10), damage(0)
 {
 	this->name = name;
-	std::cout << "Constructor with name " << name << " called!" << std::endl;
+	std::cout << "ClapTrap Constructor with name " << name << " called!" << std::endl;
 }
 
 ClapTrap::ClapTrap(const ClapTrap& org)
 {
 	*this = org;
-	std::cout << "Copy constructor called!" << std::endl;
+	std::cout << "ClapTrap Copy constructor called!" << std::endl;
 }
 
 ClapTrap::~ClapTrap()
 {
-	std::cout << "Destructor called!" << std::endl;
+	std::cout << "ClapTrap Destructor called!" << std::endl;
+}
+
+ClapTrap::ClapTrap(std::string name, int hp, int energy, int damage)
+{
+	this->name = name;
+	this->hp = hp;
+	this->energy = energy;
+	this->damage = damage;
 }
 
 // operator
@@ -119,9 +127,9 @@ void ClapTrap::takeDamage(unsigned int amount)
 		this->hp = 0;
 	else
 		this->hp -= amount;
-	std::cout << "💥 ClapTrap " << this->getName() << "has been attacked!!💥 ClapTrap looses " << amount << "HP!!" << std::endl;
+	std::cout << "💥 ClapTrap " << this->getName() << " has been attacked!!💥 ClapTrap looses " << amount << "HP!!" << std::endl;
 	if (this->getHp() == 0)
-		std::cout << "Claptrap " << this->getName() << "has now died. 🪦 🌹" << std::endl ;
+		std::cout << "Claptrap " << this->getName() << " has now died. 🪦 🌹" << std::endl ;
 	else
 		std::cout << "Claptrap " << this->getName() << " now has " << this->getHp() << " HP left" << std::endl;
 }
