@@ -24,11 +24,6 @@ int main()
 	seeStats(scav, CYAN);
 	seeStats(frag, MAGENTA);
 	seeStats(diamond, YELLOW);
-	/* 
-		clap.stats(RED);
-	scav.stats(CYAN);
-	frag.stats(MAGENTA);
-	diamond.stats(YELLOW); */
 
 	std::cout << "\n ------ \t PELEEN 🤺⚔️🗡️ ------ \n" << std::endl;
 	clap.attack(scav.getName());
