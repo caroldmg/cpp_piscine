@@ -1,41 +1,37 @@
 NAME = Animals
-SRC = main.cpp Animal.cpp Cat.cpp Dog.cpp WrongAnimal.cpp WrongCat.cpp
-OBJ = $(SRC:.cpp=.o)
-HEADERS =
+
+SRCS = \
+	src/main.cpp \
+	src/Animal.cpp \
+	src/WrongAnimal.cpp \
+	src/Dog.cpp \
+	src/Cat.cpp \
+	src/WrongCat.cpp
+
+OBJS = $(SRCS:src/%.cpp=objs/%.o)
+
 CC = c++
-CPPFLAGS = -Wall -Werror -Wextra -std=c++98
-RM = rm -f
+CPPFLAGS = -Wall -Wextra -Werror -std=c++98 -Iinc #-Wshadow
 
-# COLORES
-COLOREND = \033[0m
-GREEN = \033[1;32m
-RED = \e[1;31m
-YELLOW = \e[1;33m
-BLUE = \033[0;34m
-CIAN = \e[7;36m
+$(NAME): $(OBJS)
+	$(CC) $(CPPFLAGS) $(OBJS) -o $(NAME)
 
+# regla para compilar .cpp en .o dentro de objetos/
+objs/%.o: src/%.cpp | objs
+	$(CC) $(CPPFLAGS) -c $< -o $@
+
+# crear la carpeta objetos si no existe
+objs:
+	@mkdir -p objs
 
 all: $(NAME)
 
-$(NAME): $(OBJ)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJ)
-
-%.o: %.cpp
-	$(CC) $(CPPFLAGS) -c $< -o $@
-
 clean:
-	$(RM) $(OBJ)
-	@clear
-	@echo "$(BLUE)Limpio$(COLOREND)"
+	@rm -rf objs
 
 fclean: clean
-	$(RM) $(NAME)
-	@clear
-	@echo "$(BLUE)Limpio$(COLOREND)"
+	@rm -f $(NAME)
 
 re: fclean all
 
-exec:
-	./$(NAME)
-
-.PHONY: all clean fclean re exec
+.PHONY: all clean fclean re
