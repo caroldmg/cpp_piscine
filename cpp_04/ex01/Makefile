@@ -6,7 +6,8 @@ SRCS = \
 	src/WrongAnimal.cpp \
 	src/Dog.cpp \
 	src/Cat.cpp \
-	src/WrongCat.cpp
+	src/WrongCat.cpp \
+	src/Brain.cpp
 
 OBJS = $(SRCS:src/%.cpp=objs/%.o)
 
