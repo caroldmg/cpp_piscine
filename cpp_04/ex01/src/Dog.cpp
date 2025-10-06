@@ -44,10 +44,13 @@ void	Dog::makeSound() const
 
 void	Dog::setIdea(int i, std::string& idea)
 {
-	brain->setIdea(i, idea);
+	if (brain)
+		brain->setIdea(i, idea);
 }
 
 std::string	Dog::getIdea(int i)
 {
+	if (!brain)
+		return "no ideas found";
 	return (brain->getIdea(i));
 }

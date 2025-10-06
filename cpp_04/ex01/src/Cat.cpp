@@ -53,6 +53,6 @@ void Cat::setIdea(int i, std::string& idea)
 std::string Cat::getIdea(int i)
 {
 	if (!brain)
-		return ;
+		return "no ideas found";
 	return (brain->getIdea(i));
 }
