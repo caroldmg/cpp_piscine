@@ -2,6 +2,7 @@
 #include <iostream>
 #include "ICharacter.hpp"
 
+class ICharacter;
 class AMateria
 {
 	protected:
@@ -10,7 +11,7 @@ class AMateria
 		AMateria();
 		AMateria(const AMateria& org);
 		AMateria (std::string const & type);
-		~AMateria();
+		virtual ~AMateria();
 
 		AMateria& operator=(const AMateria &org);
 

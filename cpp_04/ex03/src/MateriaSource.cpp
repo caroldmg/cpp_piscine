@@ -2,14 +2,14 @@
 
 MateriaSource::MateriaSource( void )
 {
-	std::cout << "Default MateriaSource Constructor called" << std::endl;
+	// std::cout << "Default MateriaSource Constructor called" << std::endl;
 	for (int i = 0; i < 4; i++)
 		this->mats[i] = NULL;
 }
 
 MateriaSource::MateriaSource( const MateriaSource& org)
 {
-	std::cout << "Copy MateriaSource Constructor called" << std::endl;
+	// std::cout << "Copy MateriaSource Constructor called" << std::endl;
 	if (this != &org)
 	{
 		for (int i = 0; i < 4; i++)
@@ -24,7 +24,7 @@ MateriaSource::MateriaSource( const MateriaSource& org)
 
 MateriaSource& MateriaSource::operator=(const MateriaSource& org)
 {
-	std::cout << "MateriaSource assignment operator called" << std::endl;
+	// std::cout << "MateriaSource assignment operator called" << std::endl;
 	if (this != &org)
 	{
 		for (int i = 0; i< 4; i++)
@@ -51,7 +51,7 @@ MateriaSource::~MateriaSource()
 		if (this->mats[i])
 			delete mats[i];
 	}
-	std::cout << "Default MateriaSource Destructor called" << std::endl;
+	// std::cout << "Default MateriaSource Destructor called" << std::endl;
 }
 
 // Métodos de clase
@@ -68,7 +68,7 @@ void	MateriaSource::learnMateria(AMateria* materia)
 		if (!this->mats[i])
 		{
 			this->mats[i] = materia;
-			std::cout << "The materia " << materia->getType() << " has been learned" << std::endl;
+			// std::cout << "The materia " << materia->getType() << " has been learned" << std::endl;
 			return ;
 		}
 	}
@@ -80,7 +80,7 @@ AMateria *MateriaSource::createMateria(std::string const & type)
 	{
 		if (type == this->mats[i]->getType())
 		{
-			std::cout << "Created the materia " << type << std::endl;
+			// std::cout << "Created the materia " << type << std::endl;
 			return (this->mats[i]->clone());
 		}
 	}

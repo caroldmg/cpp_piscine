@@ -5,7 +5,16 @@
 #include <Ice.hpp>
 #include <Cure.hpp>
 
-int main() {
+#define BLACK   "\033[1m\033[30m"
+#define RED     "\033[1m\033[31m"
+#define GREEN   "\033[1m\033[32m"
+#define YELLOW  "\033[1m\033[33m"
+#define BLUE    "\033[1m\033[34m"
+#define MAGENTA "\033[1m\033[35m"
+#define CYAN    "\033[1m\033[36m"
+#define RESET   "\033[0m"
+
+/* int main() {
     IMateriaSource* source = new MateriaSource();
     AMateria* new_ice = new Ice();
     AMateria* new_cure = new Cure();
@@ -40,19 +49,36 @@ int main() {
 
     kevin->unequip(1);
     kevin->unequip(0);
-
+	
 
     std::cout<<std::endl;
 
     delete source;
-    delete new_ice;
-    delete new_cure;
     delete kevin;
     delete dummy;
-    delete buffer0;
-    delete buffer1;
 
     return 0;
+} */
+
+	int main()
+{
+	IMateriaSource* src = new MateriaSource();
+	src->learnMateria(new Ice());
+	src->learnMateria(new Cure());
+	ICharacter* me = new Character("me");
+	AMateria* tmp;
+	tmp = src->createMateria("ice");
+	me->equip(tmp);
+	tmp = src->createMateria("cure");
+	me->equip(tmp);
+	ICharacter* bob = new Character("bob");
+	me->use(0, *bob);
+	me->use(1, *bob);
+	delete bob;
+	delete me;
+	delete src;
+	return 0;
+
 }
 
 /*

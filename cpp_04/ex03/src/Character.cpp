@@ -4,44 +4,52 @@ Character::Character() : name("no_name")
 {
 	for (int i = 0; i < 4; i++)
 		this->mat[i] = NULL;
-	std::cout << "Default Character Constructor called" << std::endl;
+	for(int i = 0; i < 100; i++)
+		this->floor[i] = NULL;
+	// std::cout << "Default Character Constructor called" << std::endl;
 }
 
 Character::Character(std::string name): name(name)
 {
 	for (int i = 0; i < 4; i++)
 		this->mat[i] = NULL;
-	std::cout << "Character " << name << " cnstructor called" << std::endl;
+	for(int i = 0; i < 100; i++)
+		this->floor[i] = NULL;
+	// std::cout << "Character " << name << " cnstructor called" << std::endl;
 }
 
 Character::Character(const Character &org): name(org.name)
 {
-	std::cout << "Character copy constructor called" << std::endl;
+	// std::cout << "Character copy constructor called" << std::endl;
 	if (this != &org)
 	{
 		for (int i = 0; i < 4; i++)
 		{
 			if (org.mat[i])
+			{
 				mat[i] = org.mat[i]->clone();
+				this->floor[i] = org.floor[i]->clone();
+			}
 			else
+			{
 				mat[i] = NULL;
+				this->floor[i] = NULL;
+			}
 		}
 	}
 }
 
 Character& Character::operator=(const Character& org)
 {
-	std::cout << "Character assignment operator called" << std::endl;
+	// std::cout << "Character assignment operator called" << std::endl;
 	if (this != &org)
 	{
 		name = org.name;
-		// primero elimina las materias existentes
 		for (int i = 0; i< 4; i++)
 		{
 			delete (mat[i]);
 			mat[i] = NULL;
 		}
-		// luego las copia con la funcion de clone que es la que nos da una nueva instancia de esa materia concreta (ice o cure), no de AMateria
 		for (int i = 0; i < 4; i++)
 		{
 			if (org.mat[i])
@@ -58,7 +66,7 @@ Character::~Character()
 	for (int i = 0; i < 4; i++)
 		delete (mat[i]);
 	this->cleanFloor();
-	std::cout << "Character destructor called" << std::endl;
+	// std::cout << "Character destructor called" << std::endl;
 }
 
 // Métodos de clase
@@ -77,12 +85,15 @@ void Character::equip(AMateria* m)
 	}
 	for (int i = 0; i < 4; i++)
 	{
-		if (!mat[i])
+		if (mat[i] == NULL)
+		{
+
 			mat[i] = m;
-		std::cout << "Equipped materia " << this->mat[i]->getType() << std::endl;
-		return ;
+			// std::cout << "Equipped materia " << this->mat[i]->getType() << std::endl;
+			return ;
+		}
 	}
-	std::cout << "Cannot equip materia: " << this->getName() << "'s inventory is full!" << std::endl;
+	// std::cout << "Cannot equip materia: " << this->getName() << "'s inventory is full!" << std::endl;
 }
 
 
@@ -132,7 +143,8 @@ void Character::cleanFloor()
 	int i = 0;
 	while (i < 100 && floor[i] != NULL)
 	{
-		delete (floor[i]);
+		if (floor[i])
+			delete (floor[i]);
 		i++;
 	}
 }

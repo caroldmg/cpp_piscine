@@ -15,9 +15,9 @@ class Character : public  ICharacter
 
 		Character& operator=(const Character& org);
 
-		std::string const & getName() const;
-        void equip(AMateria* m);
-        void use( int idx, ICharacter& target );
-        void unequip( int idx );
+		virtual std::string const & getName() const;
+        virtual void equip(AMateria* m);
+        virtual void use( int idx, ICharacter& target );
+        virtual void unequip( int idx );
 		void cleanFloor();
 };

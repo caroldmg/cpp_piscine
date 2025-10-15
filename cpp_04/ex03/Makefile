@@ -1,17 +1,18 @@
-NAME = Animals
+NAME = ex03
 
 SRCS = \
 	src/main.cpp \
-	src/Animal.cpp \
-	src/WrongAnimal.cpp \
-	src/Dog.cpp \
-	src/Cat.cpp \
-	src/WrongCat.cpp
+	src/AMateria.cpp \
+	src/Character.cpp \
+	src/Cure.cpp \
+	src/Ice.cpp \
+	src/MateriaSource.cpp \
+
 
 OBJS = $(SRCS:src/%.cpp=objs/%.o)
 
 CC = c++
-CPPFLAGS = -Wall -Wextra -Werror -std=c++98 -Iinc #-Wshadow
+CPPFLAGS = -Wall -Wextra -Werror -std=c++98 -Iinc -g3 #-Wshadow
 
 $(NAME): $(OBJS)
 	$(CC) $(CPPFLAGS) $(OBJS) -o $(NAME)
