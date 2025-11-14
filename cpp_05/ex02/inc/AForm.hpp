@@ -20,12 +20,12 @@ class AForm
 
 		AForm& operator=(const AForm &org);
 
-		std::string getName() const;
-		int			getGradeToSign() const;
-		int			getGradeToExec() const;
-		bool		getIsSigned() const;
-		void		beSigned(Bureaucrat b);
-		execute(Bureaucrat const & executor) const = 0;
+		std::string 	getName() const;
+		int				getGradeToSign() const;
+		int				getGradeToExec() const;
+		bool			getIsSigned() const;
+		void			beSigned(Bureaucrat b);
+		virtual void	execute(Bureaucrat const & executor) const = 0;
 
 		class GradeTooHighException : public std::exception
 		{

@@ -36,7 +36,7 @@ Form& Form::operator=(const Form &org)
 		const_cast<int&>(this->gradeToExec) = org.getGradeToExec();
 		this->isSigned = org.getIsSigned();
 	}
-	std::cout << "Copy Assigment operator called" << std::endl;
+	std::cout << "Form: Assigment operator called" << std::endl;
 	return (*this);
 }
 
