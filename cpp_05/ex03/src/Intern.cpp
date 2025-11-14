@@ -20,9 +20,11 @@ Intern::~Intern()
 
 // OPERATORS
 
-Intern& Intern::operator=( const Intern& before )
+Intern& Intern::operator=( const Intern& org)
 {
 	std::cout << "Copy Intern Assigment operator called" << std::endl;
+	if (this != &org)
+		*this = org;
 	return (*this);
 }
 
@@ -41,6 +43,7 @@ AForm* Intern::makeForm(std::string form, std::string target)
 		"shrubbery"
 	};
 	int f;
+	std::string write;
 	for (int i = 0; i < 3; i++)
 	{
 		if (types[i] == form)
@@ -48,15 +51,24 @@ AForm* Intern::makeForm(std::string form, std::string target)
 	}
 	switch (f)
 	{
-		case 0: 
+		case 0:
+		{
+			write = "Presidential Pardon Form";
 			return (new PresidentialPardonForm(target));
-		case 1: 
+		}
+		case 1:
+		{
+			write = "Robotomy Request Form";
 			return (new RobotomyRequestForm(target));
-		case 2: 
+		}
+		case 2:
+		{
+			write = "Shrubbery Creation Form";
 			return (new ShrubberyCreationForm(target));
+		}
 		default:
 			throw (std::runtime_error("Invalid type of form"));
 	}
 
-	std::cout << "Intern creates " <<
+	std::cout << "Intern creates " << write << std::endl;
 }

@@ -1,61 +1,36 @@
 
-#include "PresidentialPardonForm.hpp"
-#include "RobotomyRequestForm.hpp"
-#include "ShrubberyCreationForm.hpp"
+#include "Intern.hpp"
 
-int main()
+int main(void)
 {
-	try
-	{
-		Bureaucrat	b2("b2", 1);
-		AForm *pardon =   new PresidentialPardonForm("pardon");
+	Intern test_intern;
 
-		b2.executeForm(*pardon);
-		b2.signForm(*pardon);
-		b2.signForm(*pardon);
-		b2.executeForm(*pardon);
-		delete pardon;
-
-	}
-	catch(const std::exception& e)
-	{
-		std::cerr << e.what() << '\n';
-	}
-
-	std::cout << "\n";
+	std::cout << std::endl << "Creating Forms" << std::endl;
+	AForm	*presi = NULL;
+	AForm	*robotomy = NULL;
+	AForm	*shrubbery = NULL;
 
 	try
 	{
-		Bureaucrat	b3("b3", 1);
-		AForm *robot = new RobotomyRequestForm("robot");
-
-		b3.executeForm(*robot);
-		b3.signForm(*robot);
-		b3.signForm(*robot);
-		b3.executeForm(*robot);
-		delete robot;
-
+		presi = test_intern.makeForm("presidential", "Andres Manuel");
+		robotomy = test_intern.makeForm("robotomy", "c3po");
+		shrubbery = test_intern.makeForm("shrubbery creation", "forest");
 	}
 	catch(const std::exception& e)
 	{
-		std::cerr << e.what() << '\n';
+		std::cerr << e.what() << std::endl;
 	}
+	
+	Bureaucrat	boss("Boss", 1);
 
-	std::cout << "\n";
-
-	try
-	{
-		Bureaucrat	b4("b4", 1);
-		AForm *tree = new ShrubberyCreationForm("tree");
-
-		b4.executeForm(*tree);
-		b4.signForm(*tree);
-		b4.signForm(*tree);
-		b4.executeForm(*tree);
-		delete tree;
-	}
-	catch(const std::exception& e)
-	{
-		std::cerr << e.what() << '\n';
-	}
+	if (presi)
+		boss.executeForm(*presi);
+	if (robotomy)
+	boss.executeForm(*robotomy);
+	if (shrubbery)
+		boss.executeForm(*shrubbery);
+	
+	delete presi;
+	delete robotomy;
+	delete shrubbery;
 }

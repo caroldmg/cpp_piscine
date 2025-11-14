@@ -14,4 +14,4 @@ class Intern
 
 		AForm* makeForm(std::string form, std::string target);
 
-}
+};

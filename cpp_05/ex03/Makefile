@@ -1,5 +1,5 @@
 
-NAME = ex02
+NAME = ex03
 
 # COLORS
 GREEN := \033[0;32m
@@ -14,6 +14,7 @@ SRCS = \
 	src/ShrubberyCreationForm.cpp \
 	src/RobotomyRequestForm.cpp \
 	src/AForm.cpp \
+	src/Intern.cpp \
 
 OBJS = $(SRCS:src/%.cpp=objs/%.o)
 
