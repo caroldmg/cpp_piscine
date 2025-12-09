@@ -9,6 +9,7 @@ enum type
 	INT,
 	FLOAT,
 	DOUBLE,
+	PSEUDOLIT,
 	ERROR
 };
 
@@ -36,3 +37,4 @@ bool isChar(std::string input);
 bool isInt(std::string input);
 bool isFloat(std::string input);
 bool isDouble(std::string input);
+type	getType(const std::string &input);

@@ -29,10 +29,13 @@ ScalarConverter& ScalarConverter::operator=(const ScalarConverter& org)
 
 // CLASS METHODS
 
-
-
 void	ScalarConverter::convert(std::string input)
 {
+	type t;
+
+	if (input.empty())
+		throw (ScalarConverter::InvalidInputException());
+	type = getType(input);
 
 }
 
