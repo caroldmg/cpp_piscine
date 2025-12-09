@@ -36,6 +36,7 @@ void	ScalarConverter::convert(std::string input)
 	if (input.empty())
 		throw (ScalarConverter::InvalidInputException());
 	type = getType(input);
+	
 
 }
 
