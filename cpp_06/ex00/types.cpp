@@ -106,22 +106,9 @@ type	getType(const std::string &input)
 		return (ERROR);
 }
 
-// limits
-
-// para los limites de int:
-/*
-	para los limites de int:
-	- variable tipo long a la que metems el valor del input como long, y comprobamos qe no sea mayor a intMax  ni menor a intmin
-
-	limites de float:
-	- >FLOTMAX, <-FLTMAX;
-	// strtod(toConvert.c_str(), &end)
-
-	limites de double
-	- >DBLMAX, <-DBLMAX;
-*/
-
-/**
+/**	Esta función mira si el input supera los limites de cada tipo.
+ * 	Retorna true si el valor es válido 
+ *  Retorna false si el valor hace overflow
  */
 bool checkLimits(const std::string &input, type t)
 {
