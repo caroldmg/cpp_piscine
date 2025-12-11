@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include <climits>
+#include <cfloat>
 
 enum type
 {

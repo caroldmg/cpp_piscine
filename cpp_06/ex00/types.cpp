@@ -120,3 +120,31 @@ type	getType(const std::string &input)
 	limites de double
 	- >DBLMAX, <-DBLMAX;
 */
+
+/**
+ */
+bool checkLimits(const std::string &input, type t)
+{
+	if (t == INT)
+	{
+		long num = strtol(input.c_str(), NULL, 10);
+		if (num < INT_MIN || num > INT_MAX)
+			return (false);
+	}
+	else if (t == FLOAT || t == DOUBLE)
+	{
+		double num = strtod(input.c_str(), NULL);
+		
+		if (t == FLOAT)
+		{
+			if (num < FLT_MIN || num > FLT_MAX)
+				return (false);
+		}
+		else
+		{
+			if (num < DBL_MIN || num > DBL_MAX)
+				return (false);
+		}
+	}
+	return (true);
+}
