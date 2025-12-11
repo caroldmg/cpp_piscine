@@ -90,34 +90,6 @@ int isPseudoLiteral(std::string input)
 	return (-1);
 }
 
-// 	PRINT TYPES
-
-void	printPseudoLit(const std::string &input)
-{
-	// solo deberia entrar a esta funcion si previamente nos hemos asegurado de que verdaderamente es un pseudolit
-	std::cout << "char: impossible " << std::endl;
-	std::cout << "int: impossible " << std::endl;
-	for (int i = 0; i < 3; i++)
-	{
-		if (input == LITERALS[i])
-		{
-			std::cout << "float: " << input << std::endl;
-			std::cout << "double: " << input.substr(0, input.length() -1) << std::endl;
-			return ;
-		}
-	}
-	for (int i = 3; i < 6; i++)
-	{
-		if (input == LITERALS[i])
-		{
-			std::cout << "float: " << input << "f" << std::endl;
-			std::cout << "double: " << input << std::endl;
-			return ;
-		}
-	}
-	return ;
-}
-
 type	getType(const std::string &input)
 {
 	if (isChar(input))
@@ -133,3 +105,18 @@ type	getType(const std::string &input)
 	else
 		return (ERROR);
 }
+
+// limits
+
+// para los limites de int:
+/*
+	para los limites de int:
+	- variable tipo long a la que metems el valor del input como long, y comprobamos qe no sea mayor a intMax  ni menor a intmin
+
+	limites de float:
+	- >FLOTMAX, <-FLTMAX;
+	// strtod(toConvert.c_str(), &end)
+
+	limites de double
+	- >DBLMAX, <-DBLMAX;
+*/
