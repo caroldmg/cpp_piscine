@@ -1,24 +1,12 @@
 #include "ScalarConverter.hpp"
 
-void	printChar(const std::string &input)
-{
-	char c = input[0];
-	if (isprint(c))
-		std::cout << "char: '"  << c << "'" << std::endl;
-	else
-		std::cout << "char: non displayable " << std::endl;
-	// TODO: continuar esto
-	std::cout << "int: " << static_cast<int>(c) << std::endl;
-	std::cout << "float: " << static_cast<float>(c) << ".0f" << std::endl;
-	std::cout << "double: " << static_cast<double>(c) << ".0" << std::endl;
-}
 
-void	printPseudoLit(const std::string &input)
+void	printPseudoLit(const std::string &input, int i)
 {
 	// solo deberia entrar a esta funcion si previamente nos hemos asegurado de que verdaderamente es un pseudolit
 	std::cout << "char: impossible " << std::endl;
 	std::cout << "int: impossible " << std::endl;
-	for (int i = 0; i < 3; i++)
+	if (i < 3)
 	{
 		if (input == LITERALS[i])
 		{
@@ -27,7 +15,7 @@ void	printPseudoLit(const std::string &input)
 			return ;
 		}
 	}
-	for (int i = 3; i < 6; i++)
+	for (i > 3)
 	{
 		if (input == LITERALS[i])
 		{
@@ -38,6 +26,80 @@ void	printPseudoLit(const std::string &input)
 	}
 }
 
+void	printChar(const std::string &input)
+{
+	char c = input[0];
+	if (isprint(c))
+		std::cout << "char: '"  << c << "'" << std::endl;
+	else
+		std::cout << "char: non displayable " << std::endl;
+	std::cout << "int: " << static_cast<int>(c) << std::endl;
+	std::cout << "float: " << static_cast<float>(c) << ".0f" << std::endl;
+	std::cout << "double: " << static_cast<double>(c) << ".0" << std::endl;
+}
+
 // printint
-// printfloat
-// printdouble
+void	printInt(const std::string &input)
+{
+	double	db = strtod(input.c_str(), NULL);
+	int		nb = strtol(input.c_str(), NULL, 10);
+
+	if (nb >= ' ' && nb <= '~' && std::isprint(static_cast<unsigned char>(nb)))
+		std::cout << "char: '" << static_cast<char>(nb) << "'" << std::endl;
+	else
+		std::cout << "char: Non displayable " << std::endl;
+	std::cout << "int: " << nb << std::endl;
+	std::cout << "float: " << db << ".0f" << std::endl;
+	std::cout << "double: " << db << ".0" << std::endl;
+}
+
+// // printfloat
+// void	printFloat(const std::string &input)
+// {
+// 	float	db = strtod(input.c_str(), NULL);
+// 	int		nb = static_cast<int>(db);
+
+// 	if (nb >= ' ' && nb <= '~' && std::isprint(static_cast<unsigned char>(nb)))
+// 		std::cout << "char: '" << static_cast<char>(nb) << "'" << std::endl;
+// 	else
+// 		std::cout << "char: Non displayable " << std::endl;
+// 	std::cout << "int: " << nb << std::endl;
+// 	std::cout << "float: " << std::fixed << std::setprecision(1) << db << "f" << std::endl; //std::fixed?
+// 	std::cout << "double: "<< std::fixed << std::setprecision(1) << db << std::endl;
+// }
+
+void	printFt(const std::string &input)
+{
+	double	db = strtod(input.c_str(), NULL);
+	int		nb = static_cast<int>(db);
+	float	ft = static_cast<float>(db);
+
+	if (nb >= ' ' && nb <= '~' && std::isprint(static_cast<unsigned char>(nb)))
+		std::cout << "char: '" << static_cast<char>(nb) << "'" << std::endl;
+	else
+		std::cout << "char: Non displayable " << std::endl;
+	std::cout << "int: " << nb << std::endl;
+	std::cout<< std::fixed << std::setprecision(1); 
+	std::cout << "float: " << ft <<  "f\n"; //std::fixed?
+	std::cout << "double: " << db << std::endl;
+}
+
+void	printNum(const std::string &input, type t)
+{
+	switch (t)
+	{
+		case CHAR:
+			printChar(input);
+			break;
+		case INT:
+			printInt(input);
+			break;
+		case FLOAT:
+		case DOUBLE:
+			printFt(input);
+			break;
+		default:
+			throw ScalarConverter::InvalidInputException();
+			break;
+	}
+}

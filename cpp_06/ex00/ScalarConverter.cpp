@@ -35,9 +35,16 @@ void	ScalarConverter::convert(std::string input)
 
 	if (input.empty())
 		throw (ScalarConverter::InvalidInputException());
-	type = getType(input);
-	
-
+	t = getType(input);
+	if (t = PSEUDOLIT)
+	{
+		int i = isPseudoLiteral(input);
+		printPseudoLit(input, i);
+		return ;
+	}
+	if (!checkLimits(input, t))
+		throw(ScalarConverter::InvalidInputException());
+	printNum(input, t);
 }
 
 // EXCEPTIONS

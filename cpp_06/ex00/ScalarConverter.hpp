@@ -3,6 +3,7 @@
 #include <string>
 #include <climits>
 #include <cfloat>
+#include <iomanip>
 
 enum type
 {
@@ -34,8 +35,16 @@ class ScalarConverter
 		};
 };
 
+bool checkLimits(const std::string &input, type t);
 bool isChar(std::string input);
 bool isInt(std::string input);
 bool isFloat(std::string input);
 bool isDouble(std::string input);
+int isPseudoLiteral(std::string input);
 type	getType(const std::string &input);
+// print functions
+void	printFt(const std::string &input);
+void	printInt(const std::string &input);
+void	printChar(const std::string &input);
+void	printPseudoLit(const std::string &input, int i);
+void	printNum(const std::string &input, type t);

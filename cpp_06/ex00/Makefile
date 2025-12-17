@@ -10,6 +10,7 @@ RESET := \033[0m
 SRCS = \
 	ScalarConverter.cpp \
 	types.cpp \
+	print.cpp \
 
 OBJS = $(SRCS:src/%.cpp=objs/%.o)
 

@@ -4,7 +4,7 @@ bool isChar(std::string input)
 {
 	// ¿se refiere que tiene que ser alfabetico, o a que sea un tipo char? porque un char puede ser un numero tambien pero nose
 	// igual se refeire a printable character???
-    return (std::isalpha(input[0]) && input.length() == 1); 
+    return (std::isprint(input[0]) && input.length() == 1); 
 }
 
 bool isInt(std::string input)
@@ -100,7 +100,7 @@ type	getType(const std::string &input)
 		return (DOUBLE);
 	if (isFloat(input))
 		return (FLOAT);
-	if (isPseudoLiteral(input))
+	if (isPseudoLiteral(input) >= 0)
 		return (PSEUDOLIT);
 	else
 		return (ERROR);
@@ -122,6 +122,11 @@ bool checkLimits(const std::string &input, type t)
 	{
 		double num = strtod(input.c_str(), NULL);
 		
+		/* DANI TIENE ESTOOOO
+			if (std::isnan(val) || std::isinf(val))
+				return false;
+		 */
+
 		if (t == FLOAT)
 		{
 			if (num < FLT_MIN || num > FLT_MAX)
@@ -135,3 +140,4 @@ bool checkLimits(const std::string &input, type t)
 	}
 	return (true);
 }
+
