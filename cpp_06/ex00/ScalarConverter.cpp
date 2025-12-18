@@ -1,5 +1,10 @@
 #include "ScalarConverter.hpp"
 
+// DECLARACION DE LA CONSTANTE DE LITERALES
+const std::string literals[6] = {
+    "-inff", "+inff", "nanf", "-inf", "+inf", "nan"
+};
+
 // CONSTRUCTORES Y DESTRUCTOR
 
 ScalarConverter::ScalarConverter()
@@ -36,7 +41,7 @@ void	ScalarConverter::convert(std::string input)
 	if (input.empty())
 		throw (ScalarConverter::InvalidInputException());
 	t = getType(input);
-	if (t = PSEUDOLIT)
+	if (t == PSEUDOLIT)
 	{
 		int i = isPseudoLiteral(input);
 		printPseudoLit(input, i);

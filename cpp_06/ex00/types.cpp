@@ -12,7 +12,7 @@ bool isInt(std::string input)
 	int i = 0;
 	if (input[i] == '-' || input[i] == '+')
 		i++;
-	while (i < input.length())
+	while (i < (int)input.length())
 	{
 		if (std::isdigit(input[i]) == false)
 			return (false);
@@ -29,13 +29,13 @@ bool isFloat(std::string input)
 	if (input == "-inff" || input == "+inff" || input == "nanf")
 		return true;
 
-	if (input[input.length() - 1] != 'f' || input.length() == 2 && !isdigit(input[0]))
+	if (input[input.length() - 1] != 'f' || (input.length() == 2 && !isdigit(input[0])))
 		return (false);
 
 	if (input[i] == '-' || input[i] == '+')
 		i++;
 
-	while (i < input.length())
+	while (i < (int)input.length())
 	{
 		if (std::isdigit(input[i]) == false && input[i] != '.')
 			return (false);
@@ -59,7 +59,7 @@ bool isDouble(std::string input)
 	if (input[i] == '-' || input[i] == '+')
 		i++;
 
-	while (i < input.length())
+	while (i < (int)input.length())
 	{
 		if (std::isdigit(input[i]) == false && input[i] != '.')
 			return (false);
@@ -84,7 +84,7 @@ int isPseudoLiteral(std::string input)
 {
 	for (int i = 0; i < 6; i++)
 	{
-		if (input == LITERALS[i])
+		if (input == literals[i])
 			return (i);
 	}
 	return (-1);

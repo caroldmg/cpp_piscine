@@ -1,5 +1,5 @@
 
-NAME = ex03
+NAME = scalarConverter
 
 # COLORS
 GREEN := \033[0;32m
@@ -11,6 +11,7 @@ SRCS = \
 	ScalarConverter.cpp \
 	types.cpp \
 	print.cpp \
+	main.cpp \
 
 OBJS = $(SRCS:src/%.cpp=objs/%.o)
 

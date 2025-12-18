@@ -8,16 +8,16 @@ void	printPseudoLit(const std::string &input, int i)
 	std::cout << "int: impossible " << std::endl;
 	if (i < 3)
 	{
-		if (input == LITERALS[i])
+		if (input == literals[i])
 		{
 			std::cout << "float: " << input << std::endl;
 			std::cout << "double: " << input.substr(0, input.length() -1) << std::endl;
 			return ;
 		}
 	}
-	for (i > 3)
+	else if (i > 3)
 	{
-		if (input == LITERALS[i])
+		if (input == literals[i])
 		{
 			std::cout << "float: " << input << "f" << std::endl;
 			std::cout << "double: " << input << std::endl;

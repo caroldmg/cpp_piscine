@@ -4,6 +4,7 @@
 #include <climits>
 #include <cfloat>
 #include <iomanip>
+#include <stdlib.h>
 
 enum type
 {
@@ -15,7 +16,8 @@ enum type
 	ERROR
 };
 
-#define LITERALS { "-inff", "+inff", "nanf", "-inf", "+inf", "nan" }
+// declaracion de una constante que se define en ScalarConverter.cpp
+extern const std::string	literals[6];
 
 class ScalarConverter
 {
