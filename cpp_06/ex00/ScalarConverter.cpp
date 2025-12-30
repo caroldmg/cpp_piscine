@@ -39,8 +39,11 @@ void	ScalarConverter::convert(std::string input)
 	type t;
 
 	if (input.empty())
+	{
 		throw (ScalarConverter::InvalidInputException());
+	}
 	t = getType(input);
+	std::cout << "type --> " << t << std::endl;
 	if (t == PSEUDOLIT)
 	{
 		int i = isPseudoLiteral(input);

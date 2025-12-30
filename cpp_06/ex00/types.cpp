@@ -26,18 +26,13 @@ bool isFloat(std::string input)
 	int i = 0;
 	int point = 0;
 
-	if (input == "-inff" || input == "+inff" || input == "nanf")
-		return true;
-
 	if (input[input.length() - 1] != 'f' || (input.length() == 2 && !isdigit(input[0])))
 		return (false);
-
 	if (input[i] == '-' || input[i] == '+')
 		i++;
-
-	while (i < (int)input.length())
+	while (i < ((int)input.length() - 1))
 	{
-		if (std::isdigit(input[i]) == false && input[i] != '.')
+		if ((std::isdigit(input[i]) == false) && (input[i] != '.'))
 			return (false);
 		if (input[i] == '.')
 			point++;
@@ -52,9 +47,6 @@ bool isDouble(std::string input)
 {
 	int i = 0;
 	int point = 0;
-
-	if (input == "-inf" || input == "+inf" || input == "nan")
-		return true;
 
 	if (input[i] == '-' || input[i] == '+')
 		i++;
