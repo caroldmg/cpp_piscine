@@ -6,6 +6,10 @@
 #include <iomanip>
 #include <stdlib.h>
 
+
+#define RED	"\033[31m"
+#define RESET "\033[0m"
+
 enum type
 {
 	CHAR,

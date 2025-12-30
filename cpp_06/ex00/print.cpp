@@ -3,7 +3,6 @@
 
 void	printPseudoLit(const std::string &input, int i)
 {
-	// solo deberia entrar a esta funcion si previamente nos hemos asegurado de que verdaderamente es un pseudolit
 	std::cout << "char: impossible " << std::endl;
 	std::cout << "int: impossible " << std::endl;
 	if (i < 3)
@@ -15,7 +14,7 @@ void	printPseudoLit(const std::string &input, int i)
 			return ;
 		}
 	}
-	else if (i > 3)
+	else if (i >= 3)
 	{
 		if (input == literals[i])
 		{
@@ -52,21 +51,6 @@ void	printInt(const std::string &input)
 	std::cout << "float: " << db << ".0f" << std::endl;
 	std::cout << "double: " << db << ".0" << std::endl;
 }
-
-// // printfloat
-// void	printFloat(const std::string &input)
-// {
-// 	float	db = strtod(input.c_str(), NULL);
-// 	int		nb = static_cast<int>(db);
-
-// 	if (nb >= ' ' && nb <= '~' && std::isprint(static_cast<unsigned char>(nb)))
-// 		std::cout << "char: '" << static_cast<char>(nb) << "'" << std::endl;
-// 	else
-// 		std::cout << "char: Non displayable " << std::endl;
-// 	std::cout << "int: " << nb << std::endl;
-// 	std::cout << "float: " << std::fixed << std::setprecision(1) << db << "f" << std::endl; //std::fixed?
-// 	std::cout << "double: "<< std::fixed << std::setprecision(1) << db << std::endl;
-// }
 
 void	printFt(const std::string &input)
 {

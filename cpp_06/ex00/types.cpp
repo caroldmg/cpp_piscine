@@ -114,11 +114,6 @@ bool checkLimits(const std::string &input, type t)
 	{
 		double num = strtod(input.c_str(), NULL);
 		
-		/* DANI TIENE ESTOOOO
-			if (std::isnan(val) || std::isinf(val))
-				return false;
-		 */
-
 		if (t == FLOAT)
 		{
 			if (num < FLT_MIN || num > FLT_MAX)
