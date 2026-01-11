@@ -1,5 +1,5 @@
 
-NAME = templates01
+NAME = templates00
 
 # COLORS
 GREEN := \033[0;32m
