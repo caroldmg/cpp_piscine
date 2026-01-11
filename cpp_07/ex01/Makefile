@@ -9,6 +9,7 @@ RESET := \033[0m
 
 SRCS = \
 	main.cpp \
+	functions.cpp \
 
 OBJS = $(SRCS:src/%.cpp=objs/%.o)
 

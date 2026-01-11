@@ -1,20 +1,31 @@
-Function templates with multiple template type parameters
-
-The root of our problem is that we’ve only defined the single template type (T) for our function template, and then specified that both parameters must be of this same type.
-
-The best way to solve this problem is to rewrite our function template in such a way that our parameters can resolve to different types. Rather than using one template type parameter T, we’ll now use two (T and U):
+#pragma once
 
 #include <iostream>
+#define MAGENTA "\033[1m\033[35m"
+#define CYAN    "\033[1m\033[36m"
+#define RESET   "\033[0m"
 
-template <typename T, typename U> // We're using two template type parameters named T and U
-T max(T x, U y) // x can resolve to type T, and y can resolve to type U
+// elementos const
+template<typename T, typename F> void iter(const T* array, const int len, F function)
 {
-    return (x < y) ? y : x; // uh oh, we have a narrowing conversion problem here
+	std::cout << CYAN << "const version" << RESET << std::endl;
+	for (int i = 0; i < len; i++)
+		function(array[i]);
 }
 
-int main()
+/**
+ * Sobrecarga de funciones para poder adaptar a elementos const y no const, es decir, que permitan variar
+ *  */
+template<typename T, typename F>void iter(T* array, const int len, F function)
 {
-    std::cout << max(2, 3.5) << '\n'; // resolves to max<int, double>
-
-    return 0;
+	std::cout << CYAN << "iter non const version" << RESET << std::endl;
+	for (int i = 0; i < len; i++)
+		function(array[i]);
 }
+
+//OTHER METHODS
+void	printStr(std::string &s);
+void	printInt(int &i);
+void	printWithLove(const std::string &s);
+void	rotOne(std::string &s);
+void	triple(int &n);
