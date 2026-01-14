@@ -2,9 +2,9 @@
 
 int main()
 {
-	std::string	words[] = {"me", "cago", "en", "todo"};
+	std::string	words[] = {"tu", "puta", "madre", "pringao"};
 	int			numbers[] = {1, 2, 3, 4};
-	int 		wlen = sizeof(words) / sizeof(words[0]);
+	const int 		wlen = sizeof(words) / sizeof(words[0]);
 
 	{
 		std::cout << "-----------> 1" << std::endl;
