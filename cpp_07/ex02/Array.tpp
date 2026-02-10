@@ -1,7 +1,5 @@
 #include "Array.hpp"
 
-
-// para definir las funciones necesito hacerlo con templates
 // CONSTRUCTORES Y DESTRUCTORES
 
 template <typename T>
@@ -44,7 +42,6 @@ Array<T>& Array<T>::operator=(const Array &org)
 
 	if (this != &org)
 	{
-		// if (this->data)
 		delete[] this->data;
 		this->len = org.len;
 		this->data = new T[org.len];
@@ -53,24 +50,6 @@ Array<T>& Array<T>::operator=(const Array &org)
 	}
 	return (*this);
 }
-
-
-/*  template <typename T>
-Array<T>& Array<T>::operator=(Array<T> const& org)
-{
-	std::cout << "i" << std::endl;
-	if (this == &org) {
-		return *this;
-	}
-	delete[] this->data;
-	this->data = new T[org.len];
-	this->len = org.len;
-	for (unsigned int i = 0; i < this->len; i++)
-	{
-		this->data[i] = org.data[i];
-	}
-	return *this;
-} */
 
 template <typename T>
 T&	Array<T>::operator[](unsigned int idx)
