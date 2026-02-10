@@ -12,7 +12,7 @@
  * @return int Returns the position in which its found, -1 if not found.
  */
 
-template <typename T> int easyfind (T cont, int i)
+template <typename T> int easyfind (const T &cont, int i)
 {
 	typename T::const_iterator it = std::find(cont.begin(), cont.end(), i);
 
