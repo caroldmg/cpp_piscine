@@ -20,7 +20,7 @@ class BitcoinExchange
 {
 	private:
 		std::map<std::string, float> _data;
-		void	readFile(std::ifstream &infile);
+		int	readFile(std::string infile);
 		bool	dataInit(std::ifstream &data);
 
 		// funciones de validacion y cálculo deberían ser privadas no?
