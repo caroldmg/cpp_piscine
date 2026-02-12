@@ -6,11 +6,14 @@
 #include <limits.h>
 #include <time.h>
 
+#define GREEN "\033[0;32m"
+#define RESET "\033[0m"
+
 class Span
 {
 	private:
 		std::vector<int> v;
-		unsigned int max; //max numbers that span can store
+		unsigned int max; 
 	public:
 		Span();
 		Span(unsigned int n);
@@ -22,8 +25,6 @@ class Span
 		void	addNumber(int n);
 		void	fillSpan(int min, int max);
 		int		shortestSpan();
-		// find the shortes distance between al the nums stored,
-		// if no numbers are stored or only one, no san -> exception
 		int		longestSpan();
 
 		class NoSpanPossibleException : public std::exception
