@@ -43,10 +43,10 @@ void Span::addNumber(int n)
 
 void Span::fillSpan(int min, int max)
 {
-	// int range = max - min;
+
 	int spaceLeft = this->max - v.size();
 	int num;
-	// Así pues, para simular una generación de números pseudo-aleatorios entre el número A y el número B (ambos incluidos), la siguiente fórmula se cumple:
+	// para simular una generación de números pseudo-aleatorios entre el número A y el número B (ambos incluidos), la siguiente fórmula se cumple:
 	// (rand() % (B - A + 1)) + A
 
 	for (int i = 0; i < spaceLeft; i++)
@@ -58,8 +58,7 @@ void Span::fillSpan(int min, int max)
 
 int Span::shortestSpan()
 {
-	// si no hay o solo uno, chau
-	// std::sort
+
 	int span = INT_MAX;
 
 	if (this->v.empty() || this->v.begin() == this->v.end())
