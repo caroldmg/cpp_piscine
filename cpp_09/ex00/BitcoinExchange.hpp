@@ -20,22 +20,62 @@ class BitcoinExchange
 {
 	private:
 		std::map<std::string, float> _data;
-		int	readFile(std::string infile);
+		bool	readFile(std::string infile);
 		bool	dataInit(std::ifstream &data);
+		bool	parseData(std::string date, float val);
 
 		// funciones de validacion y cálculo deberían ser privadas no?
 
 	public:
-		BitcoinExchange(/* args */);
+		BitcoinExchange();
 		BitcoinExchange(const std::string infile);
 		BitcoinExchange(const BitcoinExchange &org);
 		~BitcoinExchange();
 
 		BitcoinExchange &operator=(const BitcoinExchange &org);
 
-		// excepciones
+		// excepciones ¿hacen falta todad? mejor mensajes de error y ya
+		class OpenFileErrorException : public std::exception
+		{
+			public:
+				const char* what() const throw()
+				{
+					return "error opening file";
+				}
+		};
+
+		class EmptyConstructorException : public std::exception
+		{
+			public:
+				const char* what() const throw()
+				{
+					return "Error: file needed";
+				}
+		};
+
+		class BadInputException : public std::exception
+		{
+			public:
+				const char* what() const throw()
+				{
+					return "Error: input not valid";
+				}
+		};
+		class BadDateFormatException : public std::exception
+		{
+			public:
+				const char* what() const throw()
+				{
+					return "Error: wrong date. Format should be: YYYY-MM-DD";
+				}
+		};
+		class BadValueFormatException : public std::exception
+		{
+			public:
+				const char* what() const throw()
+				{
+					return "Error: value should be a float or integer between 0-1000";
+				}
+		};
 };
-
-
-
 

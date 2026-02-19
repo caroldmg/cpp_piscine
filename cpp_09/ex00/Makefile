@@ -11,6 +11,7 @@ YELLOW := \33[0;33m
 RESET := \033[0m
 
 SRCS := main.cpp \
+		BitcoinExchange.cpp \
 
 OBJS := $(SRCS:.cpp=.o)
 
