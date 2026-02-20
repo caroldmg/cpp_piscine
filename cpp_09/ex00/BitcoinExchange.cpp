@@ -41,15 +41,19 @@ BitcoinExchange &BitcoinExchange::operator=(const BitcoinExchange& org)
 bool	checkDate(std::string date)
 {
 	if (date.size() != 10 || date[4] != '-' || date[7] != '-')
+	{
+		// std::cout << date << "size --> " << date.size() << std::endl;
+		// std::cout << "heckdate etorna al rpincipio del to" << std::endl;
 		return (false);
+	}
 	int year = std::atoi(date.substr(0, 4).c_str());
 	int month = std::atoi(date.substr(5,6).c_str());
 	int day = std::atoi(date.substr(8,9).c_str());
 
+
 	if (year >= 1990 && year <= 9999)
 	{
 		// TODO: revisar que parte devuelve false
-		std::cout << "hey" << std::endl;
 		if (month >= 1 && month <= 12)
 		{
 			if (day > 31)
@@ -69,12 +73,31 @@ bool	checkDate(std::string date)
 	return (false);
 }
 
+bool checkValue(float val)
+{
+	if (val < 0)
+	{
+		std::cout << NOT_POSITIVE_ERROR << std::endl;
+		return (false);
+	}
+	else if (val > 1000)
+	{
+		std::cout << LARGE_NUM_ERROR << std::endl;
+		return (false);
+	}
+	return (true);
+}
+
 bool	BitcoinExchange::parseData(std::string date, float value)
 {
-	if (!checkDate(date))
-		throw BitcoinExchange::BadDateFormatException();
-	(void)value;
-	return true;
+	if (checkDate(date) == false)
+	{
+		std::cerr << WRONG_DATE_ERROR << std::endl;
+		return (false);
+	}
+	if (checkValue(value) == false)
+		return (false);
+	return (true);
 }
 
 /**
@@ -100,13 +123,12 @@ bool	BitcoinExchange::dataInit(std::ifstream &data)
 		date.insert(0, line, 0, line.find(','));
 		str_val.insert(0, line, (line.find(',') + 1), line.size());
 		floatval = std::atof(str_val.c_str());
-		// _data.insert(std::makepair("fecha", valor));
-		// this->_data.insert(std::make_pair(date, std::atof(str_val.c_str())));
-		// date.clear();
-		// str_val.clear();
-
-		this->parseData(date, floatval);
+		if (this->parseData(date, floatval) == false)
+			return false;
+		// this->parseData(date, floatval);
 		this->_data[date] = floatval;
+		date.clear();
+		str_val.clear();
 	}
 	return true;
 }
@@ -128,14 +150,6 @@ bool	BitcoinExchange::readFile(std::string infile)
 	try
 	{
 		this->dataInit(df);
-		// comprobar que va
-		std::map<std::string, float>::iterator it;
-		for(it = this->_data.begin(); it != this->_data.end(); ++it)
-		{
-			 std::cout << "Fecha: " << it->first
-              << " | Valor: " << it->second
-              << std::endl;
-		}
 		return (true);
 	}
 	catch(const std::exception& e)

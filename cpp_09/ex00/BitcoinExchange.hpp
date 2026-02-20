@@ -9,6 +9,12 @@
 #define CYAN    "\033[1m\033[36m"
 #define RESET   "\033[0m"
 
+#define NOT_POSITIVE_ERROR "Error: not a positive number."
+#define FILE_OPEN_ERROR "Error: could not open file."
+#define INPUT_ERROR "Error: bad input "
+#define LARGE_NUM_ERROR "Error: too large a number"
+#define WRONG_DATE_ERROR "Error: wrong date. Format should be: YYYY-MM-DD"
+
 #include <iostream>
 #include <map>
 #include <string>
