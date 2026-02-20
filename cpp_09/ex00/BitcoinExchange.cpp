@@ -150,6 +150,7 @@ bool	BitcoinExchange::readFile(std::string infile)
 	try
 	{
 		this->dataInit(df);
+		AHORA MISMO TENGO HECHO LA INICIALIZACION (PARSEO), Y ME FALTARIA LA APRTE DE ACEPTAR EL INPUT (LEER QUE LA FECHA Y TAL SEA CORRECTA) Y HACER EL CALCULO, QUE NO SERÁ GRAN COSA DIGO YO?
 		return (true);
 	}
 	catch(const std::exception& e)
