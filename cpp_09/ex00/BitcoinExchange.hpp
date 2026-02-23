@@ -13,7 +13,7 @@
 #define FILE_OPEN_ERROR "Error: could not open file."
 #define INPUT_ERROR "Error: bad input "
 #define LARGE_NUM_ERROR "Error: too large a number"
-#define WRONG_DATE_ERROR "Error: wrong date. Format should be: YYYY-MM-DD"
+#define WRONG_DATE_ERROR "Error: wrong date. Format should be: YYYY-MM-DD. Hint: mind leap years"
 
 #include <iostream>
 #include <map>
@@ -21,6 +21,7 @@
 #include <limits.h>
 #include <fstream>
 #include <algorithm>
+#include <iomanip>
 
 class BitcoinExchange
 {
@@ -29,8 +30,10 @@ class BitcoinExchange
 		bool	readFile(std::string infile);
 		bool	dataInit(std::ifstream &data);
 		bool	parseData(std::string date, float val);
-
-		// funciones de validacion y cálculo deberían ser privadas no?
+		bool	parseInput(std::string date, float val);
+		void	manageInput(std::ifstream &file);
+		float	calcValue(std::string date, float value);
+		void	print(std::string date, float val);
 
 	public:
 		BitcoinExchange();
@@ -59,29 +62,5 @@ class BitcoinExchange
 				}
 		};
 
-		class BadInputException : public std::exception
-		{
-			public:
-				const char* what() const throw()
-				{
-					return "Error: input not valid";
-				}
-		};
-		class BadDateFormatException : public std::exception
-		{
-			public:
-				const char* what() const throw()
-				{
-					return "Error: wrong date. Format should be: YYYY-MM-DD";
-				}
-		};
-		class BadValueFormatException : public std::exception
-		{
-			public:
-				const char* what() const throw()
-				{
-					return "Error: value should be a float or integer between 0-1000";
-				}
-		};
 };
 

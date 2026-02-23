@@ -77,26 +77,74 @@ bool checkValue(float val)
 {
 	if (val < 0)
 	{
-		std::cout << NOT_POSITIVE_ERROR << std::endl;
+		std::cout << RED << NOT_POSITIVE_ERROR << RESET << std::endl;
 		return (false);
 	}
 	else if (val > 1000)
 	{
-		std::cout << LARGE_NUM_ERROR << std::endl;
+		std::cout << "num --> " << val << std::endl;
+		std::cout << RED << LARGE_NUM_ERROR << RESET << std::endl;
 		return (false);
 	}
 	return (true);
 }
 
-bool	BitcoinExchange::parseData(std::string date, float value)
+float	BitcoinExchange::calcValue(std::string date, float value)
+{
+	std::map<std::string, float>::iterator	it;
+	float									res = 0;
+
+	
+	it = this->_data.upper_bound(date);
+
+	if (it == this->_data.begin())
+		return (res);
+	else
+		--it;
+	// std::cout << GREEN << "ORIGINAL DATE --> " << date << " la que da upperbound --> " << it->first << std::endl;
+	// std::cout << "------------" << RESET << std::endl;
+	if (it != this->_data.end())
+		res = value * it->second;
+	return (res);
+
+}
+
+void	BitcoinExchange::print(std::string date, float value)
+{
+	float res = this->calcValue(date, value);
+
+	std::cout << date << " => " << value << " = "
+			<< std::fixed << std::setprecision(2)
+			 << res << std::endl;
+	std::cout.unsetf(std::ios::fixed);
+}
+
+bool	BitcoinExchange::parseInput(std::string date, float val)
 {
 	if (checkDate(date) == false)
 	{
-		std::cerr << WRONG_DATE_ERROR << std::endl;
+		std::cerr << RED << WRONG_DATE_ERROR << RESET << std::endl;
 		return (false);
 	}
-	if (checkValue(value) == false)
+	if (checkValue(val) == false)
+	{
 		return (false);
+	}
+	return (true);
+}
+
+bool	BitcoinExchange::parseData(std::string date, float val)
+{
+	if (checkDate(date) == false)
+	{
+		std::cerr << RED << WRONG_DATE_ERROR << RESET << std::endl;
+		return (false);
+	}
+	if (val < 0)
+	{
+		std::cout << RED << NOT_POSITIVE_ERROR << RESET << std::endl;
+		return (false);
+	}
 	return (true);
 }
 
@@ -123,34 +171,52 @@ bool	BitcoinExchange::dataInit(std::ifstream &data)
 		date.insert(0, line, 0, line.find(','));
 		str_val.insert(0, line, (line.find(',') + 1), line.size());
 		floatval = std::atof(str_val.c_str());
-		if (this->parseData(date, floatval) == false)
-			return false;
-		// this->parseData(date, floatval);
-		this->_data[date] = floatval;
+		if (this->parseData(date, floatval) == true)
+			this->_data[date] = floatval;
 		date.clear();
 		str_val.clear();
 	}
 	return true;
 }
 
+void	BitcoinExchange::manageInput(std::ifstream &file)
+{
+	std::string line;
+	std::string date;
+	std::string str_val;
+	float		floatval;
+
+	while(std::getline(file, line))
+	{
+		date.insert(0, line, 0, (line.find('|') - 1));
+		str_val.insert(0, line, (line.find('|') + 1), line.size());
+		floatval = std::atof(str_val.c_str());
+
+		if (this->parseInput(date, floatval) == true)
+			this->print(date, floatval);
+		date.clear();
+		str_val.clear();
+	}
+}
+
 bool	BitcoinExchange::readFile(std::string infile)
 {
-	std::ifstream f;
-	std::ifstream df;
-	f.open(infile.c_str());
-	df.open("./data.csv");
-	if (!f.is_open() || !df.is_open())
+	std::ifstream file;
+	std::ifstream datafile;
+	file.open(infile.c_str());
+	datafile.open("./data.csv");
+	if (!file.is_open() || !datafile.is_open())
 	{
 		throw BitcoinExchange::OpenFileErrorException();
-		df.close();
-		f.close();
+		datafile.close();
+		file.close();
 		// std::cerr << RED << "Error: could not open file" << std::endl;
 		return (false);
 	}
 	try
 	{
-		this->dataInit(df);
-		AHORA MISMO TENGO HECHO LA INICIALIZACION (PARSEO), Y ME FALTARIA LA APRTE DE ACEPTAR EL INPUT (LEER QUE LA FECHA Y TAL SEA CORRECTA) Y HACER EL CALCULO, QUE NO SERÁ GRAN COSA DIGO YO?
+		this->dataInit(datafile);
+		this->manageInput(file);
 		return (true);
 	}
 	catch(const std::exception& e)
