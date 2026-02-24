@@ -3,7 +3,7 @@
 // CONSTRUCTORES Y DESTRUCTORES
 RPN::RPN()
 {
-	RPN::EmptyConstructorException();
+	throw RPN::EmptyConstructorException();
 }
 
 RPN::RPN(const RPN &org)
@@ -14,13 +14,11 @@ RPN::RPN(const RPN &org)
 RPN::RPN(std::string argv)
 {
 	if (this->isValidInput(argv) == false)
-		RPN::InvalidInputException();
+		throw RPN::InvalidInputException();
 	this->calculate(argv);
 	
 	if (this->_data.size() != 1)
-	{
-		RPN::InvalidInputException();
-	}
+		throw RPN::InvalidInputException();
 	else
 		std::cout << getResult() << std::endl;
 }
@@ -47,25 +45,32 @@ bool	RPN::isValidInput(std::string argv)
 	while (i < (int)argv.size())
 	{
 		if (isspace(argv[i]))
-			i++;
-		if (isdigit(argv[i]))
-			nums++;
-		else
-		{
-			if (i == 0)
-				return (false);
-			if (argv[i] != '+' || argv[i] != '-' || argv[i] != '*' || argv[i] != '/')
-				return (false);
-			else
-				ops++;
-		}
-		if (ops != 0 && nums < 2)
 			return (false);
-		i++;
+		if (isdigit(argv[i]))
+		{
+			nums++;
+			i++;
+			if (i < (int)argv.size() && isdigit(argv[i]))
+				return (false);
+		}
+		else if (argv[i] == '+' || argv[i] == '-' || argv[i] == '*' || argv[i] == '/')
+		{
+			ops++;
+			if (nums < 2)
+				return (false);
+			nums--;
+			i++;
+		}
+		else
+			return (false);
+		if (i < (int)argv.size())
+		{
+			if (!isspace(argv[i]))
+				return (false);
+			i++;
+		}
 	}
-	if (nums <= ops)
-		return (false);
-	return (true);
+	return (nums == 1);
 }
 
 void	RPN::operatorHandler(char op)
@@ -91,7 +96,7 @@ void	RPN::operatorHandler(char op)
 			res = division(a, b);
 			break;
 		default:
-			RPN::InvalidInputException();
+			throw RPN::InvalidInputException();
 			break;
 	}
 	this->_data.push(res);
@@ -105,7 +110,7 @@ void	RPN::calculate(std::string argv)
 	while (ss >> element)
 	{
 		if (element.size() != 0)
-			RPN::InvalidInputException();
+			throw RPN::InvalidInputException();
 		if (isdigit(element[0]))
 		{
 			std::stringstream(element) >> num;
@@ -134,7 +139,7 @@ int RPN::multiplication(int a, int b)
 int RPN::division(int a, int b)
 {
 	if (a == 0)
-		RPN::DivisionByZeroException();
+		throw RPN::DivisionByZeroException();
 	return (b / a);
 }
 

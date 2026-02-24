@@ -38,8 +38,8 @@ fclean: clean
 re: fclean all
 
 what:
-	@echo "$(GREEN) RPN expressions always have one more opperand than they have operators"
-	@echo "There should be at least two numbers on the stack whenever an operator is read"
-	@echo "There should be exactly one number on the stack when the end of expression is reached $(RESET)"
+	@echo "$(GREEN)- RPN expressions always have one more opperand than they have operators"
+	@echo "- There should be at least two numbers on the stack whenever an operator is read"
+	@echo "- There should be exactly one number on the stack when the end of expression is reached $(RESET)"
 
 .PHONY: all, clean, fclean, re
