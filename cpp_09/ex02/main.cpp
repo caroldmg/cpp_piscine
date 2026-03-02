@@ -22,6 +22,7 @@ int	main(int argc, char **argv)
         for (size_t i = 0; i < vec.size(); ++i)
             std::cout << prueba.getDeque()[i] << " "; 
         std::cout << "\n";
+		std::cout << MAGENTA << "is Sorted??? --> " << (isSorted(prueba.getDeque()) ? "siiii " : "nuuuu") << RESET << std::endl;
 	}
 	catch(const std::exception& e)
 	{

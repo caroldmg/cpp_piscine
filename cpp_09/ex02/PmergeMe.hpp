@@ -90,7 +90,7 @@ bool	isSorted(const T& cont)
 
 	while (current != cont.end())
 	{
-		if (*prev > **current)
+		if (*prev > *current)
 			return (false);
 		current++;
 		prev++;
