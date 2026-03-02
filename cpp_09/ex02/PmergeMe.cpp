@@ -33,7 +33,12 @@ PmergeMe &PmergeMe::operator=(const PmergeMe &org)
 // GETTERS
 const std::vector<int>& PmergeMe::getVector() const
 {
-    return _vector;
+    return (_vector);
+}
+
+const std::deque<int>&	PmergeMe::getDeque() const
+{
+	return (_deque);
 }
 
 // OTHER CLASS METHODS
@@ -41,7 +46,10 @@ const std::vector<int>& PmergeMe::getVector() const
 void	PmergeMe::sort()
 {
 	sortVector(this->_vector);
+	sortDeque(this->_deque);
 }
+
+// VECTOR-RELATED METHODS
 
 void	PmergeMe::sortVector(std::vector<int>& v)
 {
@@ -56,22 +64,18 @@ void	PmergeMe::sortVector(std::vector<int>& v)
 		hasFrozen = true;
 	}
 	std::vector<std::pair<int, int> > pairs = makePairs(v);
-	std::vector<int> mainChain = getBigOnesVector(pairs);
-	std::vector<int> pendingChain = getSmallOnesVector(pairs);
+	std::vector<int> mainChain = getBigOnes(pairs);
+	std::vector<int> pendingChain = getSmallOnes(pairs);
 	if (mainChain.size() > 1)
 		sortVector(mainChain);
-	insertPendingVector(mainChain, pendingChain);
+	insertPending(mainChain, pendingChain);
     
 	if (hasFrozen)
 		mainChain.push_back(frozen);
 	v = mainChain;
 }
 
-void PmergeMe::sortDeque()
-{}
-
-
-std::vector<int> PmergeMe::getBigOnesVector(const std::vector<std::pair<int, int> > pairs)
+std::vector<int> PmergeMe::getBigOnes(const std::vector<std::pair<int, int> > pairs)
 {
 	std::vector<int> chain;
 	std::vector<std::pair<int, int> >::const_iterator pair_it = pairs.begin();
@@ -84,7 +88,7 @@ std::vector<int> PmergeMe::getBigOnesVector(const std::vector<std::pair<int, int
 	return (chain);
 }
 
-std::vector<int> PmergeMe::getSmallOnesVector(const std::vector<std::pair<int, int> > pairs)
+std::vector<int> PmergeMe::getSmallOnes(const std::vector<std::pair<int, int> > pairs)
 {
 	std::vector<int> chain;
 	std::vector<std::pair<int, int> >::const_iterator pair_it = pairs.begin();
@@ -98,7 +102,7 @@ std::vector<int> PmergeMe::getSmallOnesVector(const std::vector<std::pair<int, i
 }
 
 
-void	PmergeMe::insertPendingVector(std::vector<int>& mainChain, std::vector<int>& pending)
+void	PmergeMe::insertPending(std::vector<int>& mainChain, std::vector<int>& pending)
 {
 	std::vector<int> order = getIndexOrder(pending.size());
 	
@@ -109,6 +113,70 @@ void	PmergeMe::insertPendingVector(std::vector<int>& mainChain, std::vector<int>
 		mainChain.insert(it, pending[idx]);
 	}
 }
+
+// DEQUE-RELATED METHODS
+void PmergeMe::sortDeque(std::deque<int>& d)
+{
+	if (d.size() <= 1)
+		return ;
+	bool hasFrozen = false;
+	int frozen;
+	if (d.size() % 2 != 0)
+	{
+		frozen = d.back();
+		d.pop_back();
+		hasFrozen = true;
+	}
+	std::deque<std::pair<int, int> > pairs = makePairs(d);
+	std::deque<int> mainChain = getBigOnes(pairs);
+	std::deque<int> pendingChain = getSmallOnes(pairs);
+	if (mainChain.size() > 1)
+		sortDeque(mainChain);
+	insertPending(mainChain, pendingChain);
+    
+	if (hasFrozen)
+		mainChain.push_back(frozen);
+	d = mainChain;
+}
+
+std::deque<int> PmergeMe::getBigOnes(const std::deque<std::pair<int, int> > pairs)
+{
+	std::deque<int> chain;
+	std::deque<std::pair<int, int> >::const_iterator pair_it = pairs.begin();
+	while (pair_it != pairs.end())
+	{
+		chain.push_back(pair_it->second);
+		pair_it++;
+	}
+	return(chain);
+}
+
+std::deque<int> PmergeMe::getSmallOnes(const std::deque<std::pair<int, int> > pairs)
+{
+	std::deque<int> chain;
+	std::deque<std::pair<int, int> >::const_iterator pair_it = pairs.begin();
+
+	while (pair_it != pairs.end())
+	{
+		chain.push_back(pair_it->first);
+		pair_it++;
+	}
+	return (chain);
+}
+
+void	PmergeMe::insertPending(std::deque<int>& mainChain, std::deque<int>& pending)
+{
+	std::vector<int> order = getIndexOrder(pending.size());
+	
+	for (size_t i = 0; i < order.size(); ++i)
+	{
+		int idx = order[i];
+		std::deque<int>::iterator it = std::lower_bound(mainChain.begin(), mainChain.end(), pending[idx]);
+		mainChain.insert(it, pending[idx]);
+	}
+}
+
+// JACOBSTHAL SEQUENCE
 
 std::vector<int>	PmergeMe::gen_jacobsthal(int idx)
 {

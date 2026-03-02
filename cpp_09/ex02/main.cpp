@@ -18,6 +18,10 @@ int	main(int argc, char **argv)
         for (size_t i = 0; i < vec.size(); ++i)
             std::cout << prueba.getVector()[i] << " "; 
         std::cout << "\n";
+		std::cout << "deque ordenado: ";
+        for (size_t i = 0; i < vec.size(); ++i)
+            std::cout << prueba.getDeque()[i] << " "; 
+        std::cout << "\n";
 	}
 	catch(const std::exception& e)
 	{

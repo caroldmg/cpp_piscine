@@ -21,12 +21,19 @@ class	PmergeMe
 		std::vector<int>	_vector;
 		std::deque<int>		_deque;
 
+		// vector
 		void				sortVector(std::vector<int>& v);
-		std::vector<int> 	getBigOnesVector(const std::vector<std::pair<int, int> > pairs);
-		std::vector<int> 	getSmallOnesVector(const std::vector<std::pair<int, int> > pairs);
-		void				insertPendingVector(std::vector<int>& mainChain, std::vector<int>& pending);
+		std::vector<int> 	getBigOnes(const std::vector<std::pair<int, int> > pairs);
+		std::vector<int> 	getSmallOnes(const std::vector<std::pair<int, int> > pairs);
 
+		void				insertPending(std::vector<int>& mainChain, std::vector<int>& pending);
+
+		// deque
 		void				sortDeque(std::deque<int>& d);
+		void				insertPending(std::deque<int>& mainChain, std::deque<int>& pending);
+		std::deque<int> 	getBigOnes(const std::deque<std::pair<int, int> > pairs);
+		std::deque<int> 	getSmallOnes(const std::deque<std::pair<int, int> > pairs);
+
 
 		std::vector<int>		gen_jacobsthal(int idx);
 		std::vector<int> 		getIndexOrder(int size);
