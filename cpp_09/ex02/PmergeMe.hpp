@@ -90,8 +90,10 @@ bool	isSorted(const T& cont)
 
 	while (current != cont.end())
 	{
-		if (*prev > *current)
+		if (*prev > *current) {
+			std::cout << "falseeeee, current is: " << *current << " : prev is :  " << *prev << std::endl;
 			return (false);
+		}
 		current++;
 		prev++;
 	}

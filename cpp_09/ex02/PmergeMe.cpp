@@ -68,10 +68,12 @@ void	PmergeMe::sortVector(std::vector<int>& v)
 	std::vector<int> pendingChain = getSmallOnes(pairs);
 	if (mainChain.size() > 1)
 		sortVector(mainChain);
-	insertPending(mainChain, pendingChain);
-    
+		
+		// if (hasFrozen)
+		// 	mainChain.push_back(frozen);
 	if (hasFrozen)
-		mainChain.push_back(frozen);
+		pendingChain.push_back(frozen);
+	insertPending(mainChain, pendingChain);
 	v = mainChain;
 }
 
@@ -132,10 +134,11 @@ void PmergeMe::sortDeque(std::deque<int>& d)
 	std::deque<int> pendingChain = getSmallOnes(pairs);
 	if (mainChain.size() > 1)
 		sortDeque(mainChain);
-	insertPending(mainChain, pendingChain);
+	// insertPending(mainChain, pendingChain);
     
 	if (hasFrozen)
-		mainChain.push_back(frozen);
+		pendingChain.push_back(frozen);
+	insertPending(mainChain, pendingChain);
 	d = mainChain;
 }
 
