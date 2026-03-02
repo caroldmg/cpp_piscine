@@ -15,33 +15,37 @@
 #include <limits.h>
 #include <algorithm>
 
-class	PMergeMe
+class	PmergeMe
 {
 	private:
-		size_t				size;
 		std::vector<int>	_vector;
 		std::deque<int>		_deque;
 
-		std::vector<int>	jacobsthal(int idx);
-		void				sortVector();
-		std::vector<int> 	getBigOnesVector(const std::vector<std::pair<int, int>> pairs);
-		std::vector<int> 	getSmallOnesVector(const std::vector<std::pair<int, int>> pairs);
-		void				insertPendingVector(std::vector<int> mainChain, std::vector<int> pending);
+		void				sortVector(std::vector<int>& v);
+		std::vector<int> 	getBigOnesVector(const std::vector<std::pair<int, int> > pairs);
+		std::vector<int> 	getSmallOnesVector(const std::vector<std::pair<int, int> > pairs);
+		void				insertPendingVector(std::vector<int>& mainChain, std::vector<int>& pending);
 
+		void				sortDeque(std::deque<int>& d);
 
-		void				sortDeque();
-
-		// std::deque<int>		createDeque(std::vector<int> input);
+		std::vector<int>		gen_jacobsthal(int idx);
+		std::vector<int> 		getIndexOrder(int size);
 
 	public:
-		PMergeMe();
-		PMergeMe(const PMergeMe &org);
-		PMergeMe(const std::vector<int>& unsortedVec);
-		~PMergeMe();
+		PmergeMe();
+		PmergeMe(const PmergeMe &org);
+		PmergeMe(const std::vector<int>& unsortedVec);
+		~PmergeMe();
 
-		PMergeMe	&operator=(const PMergeMe &org);
+		PmergeMe	&operator=(const PmergeMe &org);
+
+		const std::vector<int>&	getVector() const;
+		const std::deque<int>&	getDeque() const;
 
 		
+		// hacer la jacobsthal privada
+
+		void		sort();
 		
 	class	EmptyConstructorException : public std::exception
 	{
@@ -51,13 +55,19 @@ class	PMergeMe
 			return "Error: empty constructor";
 		}
 	};
-
-	void	PMergeMe::sortVector(std::vector<int>& v);
 		
 };
 	
 	// OTHER METHODS
-std::vector<int>	parseInput(int argc, std::string argv); //¿esta funcion tiene sentio dentro de la clase o deberia estar fuera y la paso como argumento para crear la instancia de la clase?
+std::vector<std::pair<int, int> > makePairs(const std::vector<int>& org);
+std::deque<std::pair<int, int> > makePairs(const std::deque<int>& org);
+std::vector<int>	parseInput(int argc, char **argv); 
+
+int jacobIdx(int n);
+std::vector<int> generateJacobOrder(const std::vector<int>& jac, int size);
+
+
+
 	/**
  * esta función comprueba que la lista esté ordenada.
  * Tenemos los iteradores prev y current para apuntar al elemento que estamos observando y el anterior y comparar sus valores.
@@ -79,20 +89,4 @@ bool	isSorted(const T& cont)
 		prev++;
 	}
 	return (true);
-}
-
-
-template <template<class...> class Container>
-Container<std::pair<int, int>> makePairs(const Container<int>& org)
-{
-	Container<std::pair<int, int>> pairs;
-
-	for (size_t i = 0; i + 1 < org.size(); i +=2)
-	{
-		if (org[i] > org[i + 1])
-			pairs.push_back(std::make_pair(org[i + 1], org[i]));
-		else
-			pairs.push_back(std::make_pair(org[i], org[i + 1]));
-	}
-	return (pairs);
 }

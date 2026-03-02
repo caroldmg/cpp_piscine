@@ -1,40 +1,55 @@
 #include "PmergeMe.hpp"
 
 // CONSTRUCTORS & DESTRUCTORS
-PMergeMe::PMergeMe()
+PmergeMe::PmergeMe()
 {
 	throw EmptyConstructorException();
 }
 
-PMergeMe::PMergeMe(const PMergeMe &org)
+PmergeMe::PmergeMe(const PmergeMe &org)
 {
 	*this = org;
 }
 
-PMergeMe::PMergeMe(const std::vector<int>& unsortedVec) 
+PmergeMe::PmergeMe(const std::vector<int>& unsortedVec) 
 	: _vector(unsortedVec), 
-	_deque(unsortedVec.begin(), unsortedVec.end()), 
-	size(unsortedVec.size())
+	_deque(unsortedVec.begin(), unsortedVec.end())
 {}
 
-PMergeMe::~PMergeMe(){}
+PmergeMe::~PmergeMe(){}
 
 // OPERATORS
 
-PMergeMe &PMergeMe::operator=(const PMergeMe &org)
+PmergeMe &PmergeMe::operator=(const PmergeMe &org)
 {
-	// implementar
+    if (this == &org)
+        return *this;
+    this->_vector = org._vector;
+    this->_deque  = org._deque;
+
+    return *this;
+}
+
+// GETTERS
+const std::vector<int>& PmergeMe::getVector() const
+{
+    return _vector;
 }
 
 // OTHER CLASS METHODS
 
-void	PMergeMe::sortVector(std::vector<int>& v)
+void	PmergeMe::sort()
+{
+	sortVector(this->_vector);
+}
+
+void	PmergeMe::sortVector(std::vector<int>& v)
 {
 	if (v.size() <= 1)
 		return ;
 	bool hasFrozen = false;
 	int frozen;
-	if (_vector.size() % 2 != 0)
+	if (v.size() % 2 != 0)
 	{
 		frozen = v.back();
 		v.pop_back();
@@ -46,22 +61,94 @@ void	PMergeMe::sortVector(std::vector<int>& v)
 	if (mainChain.size() > 1)
 		sortVector(mainChain);
 	insertPendingVector(mainChain, pendingChain);
+    
+	if (hasFrozen)
+		mainChain.push_back(frozen);
+	v = mainChain;
 }
 
-void PMergeMe::sortDeque()
+void PmergeMe::sortDeque()
 {}
 
 
-// OUT-OF-CLASS METHODS
+std::vector<int> PmergeMe::getBigOnesVector(const std::vector<std::pair<int, int> > pairs)
+{
+	std::vector<int> chain;
+	std::vector<std::pair<int, int> >::const_iterator pair_it = pairs.begin();
+
+	while (pair_it != pairs.end())
+	{
+		chain.push_back(pair_it->second);
+		pair_it++;
+	}
+	return (chain);
+}
+
+std::vector<int> PmergeMe::getSmallOnesVector(const std::vector<std::pair<int, int> > pairs)
+{
+	std::vector<int> chain;
+	std::vector<std::pair<int, int> >::const_iterator pair_it = pairs.begin();
+
+	while (pair_it != pairs.end())
+	{
+		chain.push_back(pair_it->first);
+		pair_it++;
+	}
+	return (chain);
+}
+
+
+void	PmergeMe::insertPendingVector(std::vector<int>& mainChain, std::vector<int>& pending)
+{
+	std::vector<int> order = getIndexOrder(pending.size());
+	
+	for (size_t i = 0; i < order.size(); ++i)
+	{
+		int idx = order[i];
+		std::vector<int>::iterator it = std::lower_bound(mainChain.begin(), mainChain.end(), pending[idx]);
+		mainChain.insert(it, pending[idx]);
+	}
+}
+
+std::vector<int>	PmergeMe::gen_jacobsthal(int idx)
+{
+	std::vector<int> seq;
+	seq.push_back(0);
+	seq.push_back(1);
+	while (seq.back() < idx)
+		seq.push_back(seq[seq.size() - 1] + 2 * seq[seq.size() - 2]);
+	return seq;
+}
+
+std::vector<int> PmergeMe::getIndexOrder(int size)
+{
+	std::vector<int>	jacob_seq = gen_jacobsthal(size);
+	std::vector<int>	order;
+	int last = 0;
+
+	for (int i = 1; i < (int)jacob_seq.size(); ++i)
+	{
+		int idx = jacob_seq[i];
+		if (idx > size)
+			idx = size;
+		for (int j = idx; j > last; --j)
+			order.push_back(j - 1);
+		last = idx;
+		if (idx == size)
+			break;
+	}
+	return (order);
+}
+
+// FUERA DE LA CLASE
+
 std::vector<int>	parseInput(int argc, char **argv)
 {
 	std::vector<int>	vec;
 	long 				n;
 	char*				endPtr;
 
-	// 
-
-	for (int i = 0; i < argc; i++)
+	for (int i = 1; i < argc; i++)
 	{
 		n = std::strtol(argv[i], &endPtr, 10);
 		if (
@@ -79,59 +166,32 @@ std::vector<int>	parseInput(int argc, char **argv)
 	return (vec);
 }
 
-std::vector<int> PMergeMe::getBigOnesVector(const std::vector<std::pair<int, int>> pairs)
-{
-	std::vector<int> chain;
-	std::vector<std::pair<int, int> >::const_iterator pair_it = pairs.begin();
 
-	while (pair_it != pairs.end())
-	{
-		chain.push_back(pair_it->second);
-		pair_it++;
-	}
-	return (chain);
+
+std::vector<std::pair<int, int> > makePairs(const std::vector<int>& org)
+{
+    std::vector<std::pair<int, int> > pairs;
+
+    for (size_t i = 0; i + 1 < org.size(); i += 2)
+    {
+        if (org[i] > org[i + 1])
+            pairs.push_back(std::make_pair(org[i + 1], org[i]));
+        else
+            pairs.push_back(std::make_pair(org[i], org[i + 1]));
+    }
+    return pairs;
 }
 
-std::vector<int> PMergeMe::getSmallOnesVector(const std::vector<std::pair<int, int>> pairs)
+std::deque<std::pair<int, int> > makePairs(const std::deque<int>& org)
 {
-	std::vector<int> chain;
-	std::vector<std::pair<int, int> >::const_iterator pair_it = pairs.begin();
+    std::deque<std::pair<int, int> > pairs;
 
-	while (pair_it != pairs.end())
-	{
-		chain.push_back(pair_it->first);
-		pair_it++;
-	}
-	return (chain);
-}
-
-void	PMergeMe::insertPendingVector(std::vector<int> mainChain, std::vector<int> pending)
-{
-	std::vector<int> j_seq = jacobsthal(pending.size());
-}
-
-
-std::vector<int>	PMergeMe::jacobsthal(int idx)
-{
-	std::vector<int> jacobsthal;
-	int i = 1;
-	int j = jacobIdx(i);
-
-	while (j < idx)
-	{
-		jacobsthal.push_back(j);
-		i++;
-		j = jacobIdx(i);
-	}
-	return jacobsthal;
-}
-
-int jacobIdx(int n)
-{
-	if (n <= 0)
-		return (0);
-	else if (n == 1)
-		return (1);
-	else
-		return (jacobIdx(n - 1) + (2 * jacobIdx(n - 2)));
+    for (size_t i = 0; i + 1 < org.size(); i += 2)
+    {
+        if (org[i] > org[i + 1])
+            pairs.push_back(std::make_pair(org[i + 1], org[i]));
+        else
+            pairs.push_back(std::make_pair(org[i], org[i + 1]));
+    }
+    return pairs;
 }
