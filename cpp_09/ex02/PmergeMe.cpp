@@ -13,7 +13,7 @@ PmergeMe::PmergeMe(const PmergeMe &org)
 
 PmergeMe::PmergeMe(const std::vector<int>& unsortedVec) 
 	: _vector(unsortedVec), 
-	_deque(unsortedVec.begin(), unsortedVec.end())
+	_deque(unsortedVec.begin(), unsortedVec.end()), _unsorted(unsortedVec)
 {}
 
 PmergeMe::~PmergeMe(){}
@@ -26,7 +26,7 @@ PmergeMe &PmergeMe::operator=(const PmergeMe &org)
         return *this;
     this->_vector = org._vector;
     this->_deque  = org._deque;
-
+	this->_unsorted = org._unsorted;
     return *this;
 }
 
@@ -45,8 +45,36 @@ const std::deque<int>&	PmergeMe::getDeque() const
 
 void	PmergeMe::sort()
 {
-	sortVector(this->_vector);
+	clock_t	begin_deque = clock();
 	sortDeque(this->_deque);
+	clock_t	end_deque = clock();
+
+	double deq_time = 1000 * static_cast<double>(end_deque - begin_deque)/ CLOCKS_PER_SEC;
+
+	clock_t	begin_vec = clock();
+	sortVector(this->_vector);
+	clock_t	end_vec = clock();
+
+	double vec_time = 1000 * static_cast<double>(end_vec - begin_vec)/ CLOCKS_PER_SEC;
+
+	printResult(deq_time, vec_time);
+}
+
+void	PmergeMe::printResult(double deq_time, double vec_time)
+{
+	std::cout << "Before: ";
+	for (size_t i = 0; i < this->_unsorted.size(); ++i)
+		std::cout << this->_unsorted[i] << " ";
+	std::cout << std::endl;
+
+	std::cout << "After: ";
+	for (size_t i = 0; i < this->_vector.size(); ++i)
+		std::cout << this->_vector[i] << " ";
+	std::cout << std::endl;
+
+	std::cout << "Time to process a range of " << this->_unsorted.size() << " elements with std::deque : "  << deq_time << " ms" << std::endl;
+
+	std::cout << "Time to process a range of " << this->_unsorted.size() << " elements with std::vector : "  << vec_time << " ms" << std::endl;
 }
 
 // VECTOR-RELATED METHODS
@@ -68,9 +96,6 @@ void	PmergeMe::sortVector(std::vector<int>& v)
 	std::vector<int> pendingChain = getSmallOnes(pairs);
 	if (mainChain.size() > 1)
 		sortVector(mainChain);
-		
-		// if (hasFrozen)
-		// 	mainChain.push_back(frozen);
 	if (hasFrozen)
 		pendingChain.push_back(frozen);
 	insertPending(mainChain, pendingChain);

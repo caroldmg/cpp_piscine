@@ -20,6 +20,7 @@ class	PmergeMe
 	private:
 		std::vector<int>	_vector;
 		std::deque<int>		_deque;
+		std::vector<int>	_unsorted;
 
 		// vector
 		void				sortVector(std::vector<int>& v);
@@ -30,13 +31,16 @@ class	PmergeMe
 
 		// deque
 		void				sortDeque(std::deque<int>& d);
-		void				insertPending(std::deque<int>& mainChain, std::deque<int>& pending);
 		std::deque<int> 	getBigOnes(const std::deque<std::pair<int, int> > pairs);
 		std::deque<int> 	getSmallOnes(const std::deque<std::pair<int, int> > pairs);
+		
+		void				insertPending(std::deque<int>& mainChain, std::deque<int>& pending);
 
+		// common
+		std::vector<int>	gen_jacobsthal(int idx);
+		std::vector<int> 	getIndexOrder(int size);
 
-		std::vector<int>		gen_jacobsthal(int idx);
-		std::vector<int> 		getIndexOrder(int size);
+		void				printResult(double deq_time, double vec_time);
 
 	public:
 		PmergeMe();

@@ -14,17 +14,6 @@ int	main(int argc, char **argv)
 		std::vector<int> vec = parseInput(argc, argv);
 		PmergeMe prueba(vec);
 		prueba.sort();
-		std::cout << "Vector ordenado: ";
-        for (size_t i = 0; i < vec.size(); ++i)
-            std::cout << prueba.getVector()[i] << " "; 
-        std::cout << "\n";
-		std::cout << "deque ordenado: ";
-        for (size_t i = 0; i < vec.size(); ++i)
-            std::cout << prueba.getDeque()[i] << " "; 
-        std::cout << "\n";
-		std::cout << GREEN << "vector is Sorted??? --> " << (isSorted(prueba.getVector()) ? "siiii " : "nuuuu") << RESET << std::endl;
-
-		std::cout << MAGENTA << "deque is Sorted??? --> " << (isSorted(prueba.getDeque()) ? "siiii " : "nuuuu") << RESET << std::endl;
 	}
 	catch(const std::exception& e)
 	{
