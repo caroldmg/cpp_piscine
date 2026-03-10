@@ -15,10 +15,13 @@ RPN::RPN(std::string argv)
 {
 	if (this->isValidInput(argv) == false)
 		throw RPN::InvalidInputException();
+
 	this->calculate(argv);
-	
 	if (this->_data.size() != 1)
+	{
+		std::cout << "aqui" << std::endl;
 		throw RPN::InvalidInputException();
+	}
 	else
 		std::cout << getResult() << std::endl;
 }
@@ -109,7 +112,7 @@ void	RPN::calculate(std::string argv)
 	std::string element;
 	while (ss >> element)
 	{
-		if (element.size() != 0)
+		if (element.size() != 1)
 			throw RPN::InvalidInputException();
 		if (isdigit(element[0]))
 		{
