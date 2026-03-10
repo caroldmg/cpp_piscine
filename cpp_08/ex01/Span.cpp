@@ -61,7 +61,7 @@ int Span::shortestSpan()
 
 	int span = INT_MAX;
 
-	if (this->v.empty() || this->v.begin() == this->v.end())
+	if (this->v.empty() || this->v.size() == 1)
 		throw (Span::NoSpanPossibleException());
 	std::sort(this->v.begin(), this->v.end());
 

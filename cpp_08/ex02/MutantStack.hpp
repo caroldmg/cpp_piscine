@@ -37,7 +37,7 @@ class MutantStack : public std::stack<T>
 		}
 		it end()
 		{
-			return (this->c.begin());
+			return (this->c.end());
 		}
 		
 };
