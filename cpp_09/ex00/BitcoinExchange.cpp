@@ -112,10 +112,15 @@ float	BitcoinExchange::calcValue(std::string date, float value)
 void	BitcoinExchange::print(std::string date, float value)
 {
 	float res = this->calcValue(date, value);
+	std::stringstream ss;
+	ss << value;
+	std::string vals = ss.str(); 
 
-	std::cout << date << " => " << value << " = "
-			<< std::fixed << std::setprecision(2)
-			 << res << std::endl;
+	std::cout << date << " => " 
+			<<  vals << " = ";
+	std::cout << std::setprecision(2)
+			<< std::fixed 
+			<< res << std::endl;
 	std::cout.unsetf(std::ios::fixed);
 }
 
@@ -133,19 +138,12 @@ bool	BitcoinExchange::parseInput(std::string date, float val)
 	return (true);
 }
 
-bool	BitcoinExchange::parseData(std::string date, float val)
+void	BitcoinExchange::parseData(std::string date, float val)
 {
 	if (checkDate(date) == false)
-	{
-		std::cerr << RED << WRONG_DATE_ERROR << RESET << std::endl;
-		return (false);
-	}
+		throw std::runtime_error(RED WRONG_DATE_ERROR RESET);
 	if (val < 0)
-	{
-		std::cout << RED << NOT_POSITIVE_ERROR << RESET << std::endl;
-		return (false);
-	}
-	return (true);
+		throw std::runtime_error(RED NOT_POSITIVE_ERROR RESET);
 }
 
 /**
@@ -170,9 +168,11 @@ bool	BitcoinExchange::dataInit(std::ifstream &data)
 		// str1.insert(pos, str2, str_idx, str_num);
 		date.insert(0, line, 0, line.find(','));
 		str_val.insert(0, line, (line.find(',') + 1), line.size());
+		if (std::atof(str_val.c_str()) == 0 && str_val != "0")
+			throw std::runtime_error( RED "Error: not a valid value" RESET);
 		floatval = std::atof(str_val.c_str());
-		if (this->parseData(date, floatval) == true)
-			this->_data[date] = floatval;
+		this->parseData(date, floatval);
+		this->_data[date] = floatval;
 		date.clear();
 		str_val.clear();
 	}

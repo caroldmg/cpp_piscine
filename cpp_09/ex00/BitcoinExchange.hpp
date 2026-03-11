@@ -22,6 +22,7 @@
 #include <fstream>
 #include <algorithm>
 #include <iomanip>
+#include <bits/stdc++.h>
 
 class BitcoinExchange
 {
@@ -29,7 +30,7 @@ class BitcoinExchange
 		std::map<std::string, float> _data;
 		bool	readFile(std::string infile);
 		bool	dataInit(std::ifstream &data);
-		bool	parseData(std::string date, float val);
+		void	parseData(std::string date, float val);
 		bool	parseInput(std::string date, float val);
 		void	manageInput(std::ifstream &file);
 		float	calcValue(std::string date, float value);
