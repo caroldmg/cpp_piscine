@@ -14,6 +14,8 @@
 #define INPUT_ERROR "Error: bad input "
 #define LARGE_NUM_ERROR "Error: too large a number"
 #define WRONG_DATE_ERROR "Error: wrong date. Format should be: YYYY-MM-DD. Hint: mind leap years"
+#define NOT_INFO "Error: no info available"
+
 
 #include <iostream>
 #include <map>
@@ -64,4 +66,3 @@ class BitcoinExchange
 		};
 
 };
-

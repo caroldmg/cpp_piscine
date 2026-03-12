@@ -41,11 +41,7 @@ BitcoinExchange &BitcoinExchange::operator=(const BitcoinExchange& org)
 bool	checkDate(std::string date)
 {
 	if (date.size() != 10 || date[4] != '-' || date[7] != '-')
-	{
-		// std::cout << date << "size --> " << date.size() << std::endl;
-		// std::cout << "heckdate etorna al rpincipio del to" << std::endl;
 		return (false);
-	}
 	int year = std::atoi(date.substr(0, 4).c_str());
 	int month = std::atoi(date.substr(5,6).c_str());
 	int day = std::atoi(date.substr(8,9).c_str());
@@ -53,7 +49,6 @@ bool	checkDate(std::string date)
 
 	if (year >= 1990 && year <= 9999)
 	{
-		// TODO: revisar que parte devuelve false
 		if (month >= 1 && month <= 12)
 		{
 			if (day > 31)
@@ -82,7 +77,6 @@ bool checkValue(float val)
 	}
 	else if (val > 1000)
 	{
-		std::cout << "num --> " << val << std::endl;
 		std::cout << RED << LARGE_NUM_ERROR << RESET << std::endl;
 		return (false);
 	}
@@ -94,15 +88,14 @@ float	BitcoinExchange::calcValue(std::string date, float value)
 	std::map<std::string, float>::iterator	it;
 	float									res = 0;
 
-	
-	it = this->_data.upper_bound(date);
-
+	it = this->_data.upper_bound(date);	
 	if (it == this->_data.begin())
-		return (res);
+	{
+		std::cout << RED << NOT_INFO << RESET << std::endl;
+		return (-1);
+	}
 	else
 		--it;
-	// std::cout << GREEN << "ORIGINAL DATE --> " << date << " la que da upperbound --> " << it->first << std::endl;
-	// std::cout << "------------" << RESET << std::endl;
 	if (it != this->_data.end())
 		res = value * it->second;
 	return (res);
@@ -112,6 +105,8 @@ float	BitcoinExchange::calcValue(std::string date, float value)
 void	BitcoinExchange::print(std::string date, float value)
 {
 	float res = this->calcValue(date, value);
+	if (res < 0)
+		return;
 	std::stringstream ss;
 	ss << value;
 	std::string vals = ss.str(); 
@@ -154,7 +149,6 @@ void	BitcoinExchange::parseData(std::string date, float val)
  */
 bool	BitcoinExchange::dataInit(std::ifstream &data)
 {
-	// aqui deberia iniciar el map y pasarle los valores del archivo .csv
 	std::string line;
 	std::string date;
 	std::string str_val;
@@ -164,8 +158,6 @@ bool	BitcoinExchange::dataInit(std::ifstream &data)
 
 	while (std::getline(data, line))
 	{
-		// primero paso a key su valor, o sea, la parte anterior a la coma
-		// str1.insert(pos, str2, str_idx, str_num);
 		date.insert(0, line, 0, line.find(','));
 		str_val.insert(0, line, (line.find(',') + 1), line.size());
 		if (std::atof(str_val.c_str()) == 0 && str_val != "0")
@@ -188,6 +180,8 @@ void	BitcoinExchange::manageInput(std::ifstream &file)
 
 	while(std::getline(file, line))
 	{
+		if (line.empty())
+			continue;
 		date.insert(0, line, 0, (line.find('|') - 1));
 		str_val.insert(0, line, (line.find('|') + 1), line.size());
 		floatval = std::atof(str_val.c_str());
@@ -210,7 +204,6 @@ bool	BitcoinExchange::readFile(std::string infile)
 		throw BitcoinExchange::OpenFileErrorException();
 		datafile.close();
 		file.close();
-		// std::cerr << RED << "Error: could not open file" << std::endl;
 		return (false);
 	}
 	try
@@ -225,5 +218,4 @@ bool	BitcoinExchange::readFile(std::string infile)
 		return (false);
 	}
 	
-	// parser
 }
